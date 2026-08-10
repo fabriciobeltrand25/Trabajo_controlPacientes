@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_TELEFONO = "telefono";
     private static final String KEY_EMAIL = "email";
     
-    // Campos Pacientes
+    // Campos Pacientes y taaa
     private static final String KEY_IDENTIDAD = "identidad";
     private static final String KEY_DIRECCION = "direccion";
     private static final String KEY_FECHA_NAC = "fecha_nacimiento";
