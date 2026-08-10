@@ -3,23 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="#D0D0D0">
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Asignación de Consultas"
+        android:text="Asignacion de Consultas"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#000000"
         android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#DBDBDB"
         android:padding="10dp">
 
         <Spinner
@@ -48,10 +45,7 @@
                 android:layout_weight="1"
                 android:hint="Fecha (YYYY-MM-DD)"
                 android:inputType="date"
-                android:padding="8dp"
-                android:textColor="#000000"
-                android:textColorHint="#666666"
-                android:background="@android:drawable/editbox_background"/>
+                android:padding="8dp"/>
 
             <EditText
                 android:id="@+id/etHora"
@@ -61,10 +55,7 @@
                 android:layout_marginLeft="8dp"
                 android:hint="Hora (HH:MM)"
                 android:inputType="time"
-                android:padding="8dp"
-                android:textColor="#000000"
-                android:textColorHint="#666666"
-                android:background="@android:drawable/editbox_background"/>
+                android:padding="8dp"/>
         </LinearLayout>
 
         <Button
@@ -72,7 +63,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Asignar Consulta"
-            android:textColor="#000000"
             android:padding="12dp"
             android:layout_marginTop="10dp"/>
     </LinearLayout>
@@ -98,18 +88,6 @@
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:text="Activas"
-            android:textColor="#000000"
-            android:padding="10dp"/>
-
-        <!-- SE AGREGA EL BOTÓN DE LIMPIAR PARA EVITAR EL CRASH -->
-        <Button
-            android:id="@+id/btnLimpiar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:text="Limpiar"
-            android:textColor="#000000"
             android:padding="10dp"/>
     </LinearLayout>
 
@@ -119,7 +97,13 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="10dp"
-        android:background="#FFFFFF"
         android:padding="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Toca una consulta activa para finalizarla"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"/>
 
 </LinearLayout>

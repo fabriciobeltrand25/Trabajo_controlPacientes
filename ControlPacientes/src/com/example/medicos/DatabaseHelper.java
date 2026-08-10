@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_TELEFONO = "telefono";
     private static final String KEY_EMAIL = "email";
     
-    // Campos Pacientes y taaa
+    // Campos Pacientes
     private static final String KEY_IDENTIDAD = "identidad";
     private static final String KEY_DIRECCION = "direccion";
     private static final String KEY_FECHA_NAC = "fecha_nacimiento";
@@ -309,6 +309,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 map.put(KEY_DIRECCION, cursor.getString(cursor.getColumnIndex(KEY_DIRECCION)));
                 map.put(KEY_TELEFONO, cursor.getString(cursor.getColumnIndex(KEY_TELEFONO)));
                 map.put(KEY_FECHA_NAC, cursor.getString(cursor.getColumnIndex(KEY_FECHA_NAC)));
+                lista.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return lista;
+    }
+    
+ // obtenemos los pacientes para cargarlos en cobros 
+    public ArrayList<HashMap<String, String>> obtenerTodosPacientes() {
+        ArrayList<HashMap<String, String>> lista = new ArrayList<HashMap<String, String>>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        
+        String[] columnas = new String[]{KEY_IDENTIDAD, KEY_NOMBRE};
+        Cursor cursor = db.query(TABLE_PACIENTES, columnas, null, null, null, null, KEY_NOMBRE);
+
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put(KEY_IDENTIDAD, cursor.getString(cursor.getColumnIndex(KEY_IDENTIDAD)));
+                map.put(KEY_NOMBRE, cursor.getString(cursor.getColumnIndex(KEY_NOMBRE)));
                 lista.add(map);
             } while (cursor.moveToNext());
         }

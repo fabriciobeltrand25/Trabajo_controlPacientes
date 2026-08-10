@@ -1,8 +1,11 @@
 package com.example.medicos;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,21 +13,26 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConsultasActivity extends Activity {
-
+    
     private Spinner spPacientes, spMedicos;
     private EditText etFecha, etHora;
-    private Button btnAsignar, btnListar, btnFinalizar, btnLimpiar;
+    private Button btnAsignar, btnListar, btnFinalizar;
     private ListView lvConsultas;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> listaConsultas;
-
+    private ArrayList<HashMap<String, String>> consultasData;
+    private DatabaseHelper dbHelper;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultas);
-
+        
+        dbHelper = new DatabaseHelper(this);
+        
         spPacientes = (Spinner) findViewById(R.id.spPacientes);
         spMedicos = (Spinner) findViewById(R.id.spMedicos);
         etFecha = (EditText) findViewById(R.id.etFecha);
@@ -32,68 +40,144 @@ public class ConsultasActivity extends Activity {
         btnAsignar = (Button) findViewById(R.id.btnAsignar);
         btnListar = (Button) findViewById(R.id.btnListar);
         btnFinalizar = (Button) findViewById(R.id.btnFinalizar);
-        btnLimpiar = (Button) findViewById(R.id.btnLimpiar); // Botón de limpiar activo
         lvConsultas = (ListView) findViewById(R.id.lvConsultas);
-
+        
         listaConsultas = new ArrayList<String>();
+        consultasData = new ArrayList<HashMap<String, String>>();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaConsultas);
         lvConsultas.setAdapter(adapter);
-
-        // Carga de opciones visuales por defecto
-        cargarSpinnersDemostracion();
-
-        // Botón Limpiar Campos
-        btnLimpiar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                limpiarCampos();
-            }
-        });
-
-        // Eventos neutros para el resto de botones
+        
+        // Fecha actual por defecto
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        etFecha.setText(sdf.format(new java.util.Date()));
+        
+        cargarPacientes();
+        cargarMedicos();
+        
         btnAsignar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ConsultasActivity.this, "Módulo de asignación en revisión", Toast.LENGTH_SHORT).show();
+                asignarConsulta();
             }
         });
-
+        
         btnListar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listaConsultas.clear();
-                listaConsultas.add("No hay consultas registradas");
-                adapter.notifyDataSetChanged();
+                listarConsultas("todas");
             }
         });
-
+        
         btnFinalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ConsultasActivity.this, "Función de finalización no disponible", Toast.LENGTH_SHORT).show();
+                listarConsultas("Activa");
             }
         });
+        
+        lvConsultas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final HashMap<String, String> consulta = consultasData.get(position);
+                if (consulta.get("estado").equals("Activa")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ConsultasActivity.this);
+                    builder.setTitle("Finalizar Consulta");
+                    builder.setMessage("Â¿Finalizar consulta de " + consulta.get("paciente") + "?");
+                    builder.setPositiveButton("SÃ­", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int idConsulta = Integer.parseInt(consulta.get("id"));
+                            if (dbHelper.finalizarConsulta(idConsulta)) {
+                                Toast.makeText(ConsultasActivity.this, "Consulta finalizada", Toast.LENGTH_SHORT).show();
+                                listarConsultas("todas");
+                            } else {
+                                Toast.makeText(ConsultasActivity.this, "Error al finalizar", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("No", null);
+                    builder.show();
+                } else {
+                    Toast.makeText(ConsultasActivity.this, "Esta consulta ya estÃ¡ finalizada", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        
+        listarConsultas("todas");
     }
-
-    private void cargarSpinnersDemostracion() {
-        ArrayList<String> pac = new ArrayList<String>();
-        pac.add("Seleccione Paciente...");
-        ArrayAdapter<String> adapterPac = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, pac);
-        spPacientes.setAdapter(adapterPac);
-
-        ArrayList<String> med = new ArrayList<String>();
-        med.add("Seleccione Médico...");
-        ArrayAdapter<String> adapterMed = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, med);
-        spMedicos.setAdapter(adapterMed);
+    
+    private void cargarPacientes() {
+        ArrayList<HashMap<String, String>> pacientes = dbHelper.listarPacientes();
+        ArrayList<String> items = new ArrayList<String>();
+        items.add("Seleccione Paciente...");
+        for (HashMap<String, String> p : pacientes) {
+            items.add(p.get("identidad") + " - " + p.get("nombre"));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, 
+                android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPacientes.setAdapter(adapter);
     }
-
-    private void limpiarCampos() {
-        if (spPacientes != null && spPacientes.getAdapter() != null) spPacientes.setSelection(0);
-        if (spMedicos != null && spMedicos.getAdapter() != null) spMedicos.setSelection(0);
-        etFecha.setText("");
-        etHora.setText("");
+    
+    private void cargarMedicos() {
+        ArrayList<HashMap<String, String>> medicos = dbHelper.listarMedicos();
+        ArrayList<String> items = new ArrayList<String>();
+        items.add("Seleccione MÃ©dico...");
+        for (HashMap<String, String> m : medicos) {
+            items.add(m.get("nombre") + " - " + m.get("especialidad"));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, 
+                android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spMedicos.setAdapter(adapter);
+    }
+    
+    private void asignarConsulta() {
+        int posPaciente = spPacientes.getSelectedItemPosition();
+        int posMedico = spMedicos.getSelectedItemPosition();
+        
+        if (posPaciente == 0 || posMedico == 0) {
+            Toast.makeText(this, "Seleccione paciente y mÃ©dico", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        String fecha = etFecha.getText().toString().trim();
+        String hora = etHora.getText().toString().trim();
+        
+        if (fecha.isEmpty() || hora.isEmpty()) {
+            Toast.makeText(this, "Ingrese fecha y hora", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        // Obtener IDs
+        ArrayList<HashMap<String, String>> pacientes = dbHelper.listarPacientes();
+        int idPaciente = Integer.parseInt(pacientes.get(posPaciente - 1).get("id"));
+        
+        ArrayList<HashMap<String, String>> medicos = dbHelper.listarMedicos();
+        int idMedico = Integer.parseInt(medicos.get(posMedico - 1).get("id"));
+        
+        if (dbHelper.insertarConsulta(idPaciente, idMedico, fecha, hora)) {
+            Toast.makeText(this, "Consulta asignada exitosamente", Toast.LENGTH_SHORT).show();
+            listarConsultas("todas");
+        } else {
+            Toast.makeText(this, "El paciente ya tiene una consulta activa", Toast.LENGTH_LONG).show();
+        }
+    }
+    
+    private void listarConsultas(String estado) {
         listaConsultas.clear();
+        consultasData.clear();
+        consultasData = dbHelper.listarConsultas(estado);
+        
+        if (consultasData.isEmpty()) {
+            listaConsultas.add("No hay consultas");
+        } else {
+            for (HashMap<String, String> c : consultasData) {
+                String icono = c.get("estado").equals("Activa") ? "ðŸŸ¢" : "ðŸ”´";
+                listaConsultas.add(icono + " " + c.get("paciente") + " - " + 
+                                 c.get("medico") + " (" + c.get("fecha_consulta") + ")");
+            }
+        }
         adapter.notifyDataSetChanged();
-        Toast.makeText(this, "Campos limpiados", Toast.LENGTH_SHORT).show();
     }
 }
