@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="#D0D0D0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Médicos"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"/>
+
+        <View 
+            android:layout_width="0dp" 
+            android:layout_height="1dp" 
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btnLimpiar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Limpiar"
+            android:textColor="#000000"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#DBDBDB"
+        android:padding="10dp"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/etCodigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Código"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="@android:drawable/editbox_background"/>
+
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre completo"
+            android:inputType="text"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="@android:drawable/editbox_background"/>
+
+        <EditText
+            android:id="@+id/etEspecialidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Especialidad"
+            android:inputType="text"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="@android:drawable/editbox_background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/etTelefono"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Teléfono"
+                android:inputType="phone"
+                android:padding="8dp"
+                android:textColor="#000000"
+                android:textColorHint="#666666"
+                android:background="@android:drawable/editbox_background"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="8dp"
+                android:textColor="#000000"
+                android:textColorHint="#666666"
+                android:background="@android:drawable/editbox_background"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Médico"
+            android:textColor="#000000"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/etBuscar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Buscar por nombre o especialidad"
+            android:padding="8dp"
+            android:textColor="#000000"
+            android:textColorHint="#666666"
+            android:background="@android:drawable/editbox_background"/>
+
+        <Button
+            android:id="@+id/btnBuscar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscar"
+            android:textColor="#000000"
+            android:padding="10dp"
+            android:layout_marginLeft="5dp"/>
+
+        <Button
+            android:id="@+id/btnListar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Todos"
+            android:textColor="#000000"
+            android:padding="10dp"
+            android:layout_marginLeft="5dp"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvMedicos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:padding="5dp"/>
+
+</LinearLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.medicos"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="29"
+        android:targetSdkVersion="29" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="Control Médicos"
+        android:theme="@android:style/Theme.Holo.Light">
+
+        <activity
+            android:name="com.example.medicos.LoginActivity"
+            android:label="Inicio de Sesión"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.example.medicos.MainActivity"
+            android:label="Menú Principal"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.example.medicos.PacientesActivity"
+            android:label="Pacientes"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.example.medicos.MedicosActivity"
+            android:label="Médicos"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.example.medicos.ConsultasActivity"
+            android:label="Consultas"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.example.medicos.CobrosActivity"
+            android:label="Cobros"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.example.medicos.ReportesActivity"
+            android:label="Reportes"
+            android:screenOrientation="portrait" />
+
+    </application>
+
+</manifest>
