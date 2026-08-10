@@ -43,7 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Fecha (YYYY-MM-DD)"
+                android:hint="Fecha"
                 android:inputType="date"
                 android:padding="8dp"/>
 
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="8dp"
-                android:hint="Hora (HH:MM)"
+                android:hint="Hora"
                 android:inputType="time"
                 android:padding="8dp"/>
         </LinearLayout>
@@ -99,11 +99,6 @@
         android:layout_marginTop="10dp"
         android:padding="5dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Toca una consulta activa para finalizarla"
-        android:textSize="12sp"
-        android:layout_marginTop="5dp"/>
+    
 
 </LinearLayout>
