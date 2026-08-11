@@ -317,14 +317,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lista;
     }
     
- // obtenemos los pacientes para cargarlos en cobros 
     public ArrayList<HashMap<String, String>> obtenerTodosPacientes() {
         ArrayList<HashMap<String, String>> lista = new ArrayList<HashMap<String, String>>();
         SQLiteDatabase db = this.getReadableDatabase();
         
         String[] columnas = new String[]{KEY_IDENTIDAD, KEY_NOMBRE};
         Cursor cursor = db.query(TABLE_PACIENTES, columnas, null, null, null, null, KEY_NOMBRE);
-
+        
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
@@ -375,41 +374,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     
     // ============ MÉTODOS PARA CONSULTAS ============
     
-    public boolean tieneConsultaPendienteOPago(int idPaciente) {
+    // Método para verificar solo consultas activas
+    public boolean tieneConsultaActiva(int idPaciente) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_CONSULTAS, 
+                                new String[]{KEY_ID}, 
+                                KEY_ID_PACIENTE + "=? AND " + KEY_ESTADO + "=?", 
+                                new String[]{String.valueOf(idPaciente), "Activa"}, 
+                                null, null, null);
+        boolean tiene = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return tiene;
+    }
+    
+    // Método para verificar pagos pendientes
+    public boolean tienePagoPendiente(int idPaciente) {
         SQLiteDatabase db = this.getReadableDatabase();
         
-        // Busca si tiene consultas Activas O si tiene consultas Finalizadas sin registro en la tabla cobros
         String query = "SELECT c.id FROM consultas c " +
                        "WHERE c.id_paciente = ? " +
-                       "AND (c.estado = 'Activa' OR " +
-                       "(c.estado = 'Finalizada' AND c.id NOT IN (SELECT id_consulta FROM cobros)))";
-
+                       "AND c.estado = 'Finalizada' " +
+                       "AND c.id NOT IN (SELECT id_consulta FROM cobros)";
+        
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idPaciente)});
         boolean tienePendiente = cursor.getCount() > 0;
         cursor.close();
-        
-        return tienePendiente; // Devuelve true si está bloqueado para nueva consulta
+        db.close();
+        return tienePendiente;
+    }
+    
+    // Método combinado para verificar consulta activa o pago pendiente
+    public boolean tieneConsultaPendienteOPago(int idPaciente) {
+        return tieneConsultaActiva(idPaciente) || tienePagoPendiente(idPaciente);
     }
     
     public boolean insertarConsulta(int idPaciente, int idMedico, String fecha, String hora) {
-        if (tieneConsultaPendienteOPago(idPaciente)) {
-            return false; // Bloquea la inserción porque tiene consulta activa o pago pendiente
+        // Verificar si el paciente tiene consulta activa
+        if (tieneConsultaActiva(idPaciente)) {
+            return false; // Bloquea solo si tiene consulta activa
         }
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id_paciente", idPaciente);
-        values.put("id_medico", idMedico);
-        values.put("fecha_consulta", fecha);
-        values.put("hora", hora);
-        values.put("estado", "Activa");
+        values.put(KEY_ID_PACIENTE, idPaciente);
+        values.put(KEY_ID_MEDICO, idMedico);
+        values.put(KEY_FECHA_CONSULTA, fecha);
+        values.put(KEY_HORA_CONSULTA, hora);
+        values.put(KEY_VALOR_CONSULTA, VALOR_CONSULTA);
+        values.put(KEY_ESTADO, "Activa");
 
-        long resultado = db.insert("consultas", null, values);
+        long resultado = db.insert(TABLE_CONSULTAS, null, values);
+        db.close();
         return resultado != -1;
     }
-    
- 
-
     
     public ArrayList<HashMap<String, String>> listarConsultas(String estado) {
         ArrayList<HashMap<String, String>> lista = new ArrayList<HashMap<String, String>>();

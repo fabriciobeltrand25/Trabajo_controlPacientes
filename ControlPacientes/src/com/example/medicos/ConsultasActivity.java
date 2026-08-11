@@ -156,14 +156,28 @@ public class ConsultasActivity extends Activity {
         ArrayList<HashMap<String, String>> medicos = dbHelper.listarMedicos();
         int idMedico = Integer.parseInt(medicos.get(posMedico - 1).get("id"));
         
+        // Verificar si el paciente tiene consulta activa
+        if (dbHelper.tieneConsultaActiva(idPaciente)) {
+            Toast.makeText(this, "El paciente ya tiene una consulta activa", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        // Intentar insertar la consulta
         if (dbHelper.insertarConsulta(idPaciente, idMedico, fecha, hora)) {
             Toast.makeText(this, "Consulta asignada exitosamente", Toast.LENGTH_SHORT).show();
             listarConsultas("todas");
+            limpiarCampos();
         } else {
-            Toast.makeText(this, "El paciente tiene una consulta activa o un pago pendiente en Cobros", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error al asignar consulta", Toast.LENGTH_LONG).show();
         }
-        
-        
+    }
+    
+    private void limpiarCampos() {
+        spPacientes.setSelection(0);
+        spMedicos.setSelection(0);
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        etFecha.setText(sdf.format(new java.util.Date()));
+        etHora.setText("");
     }
     
     private void listarConsultas(String estado) {
