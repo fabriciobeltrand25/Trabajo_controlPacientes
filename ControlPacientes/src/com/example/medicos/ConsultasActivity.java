@@ -161,6 +161,12 @@ public class ConsultasActivity extends Activity {
             Toast.makeText(this, "El paciente ya tiene una consulta activa", Toast.LENGTH_LONG).show();
             return;
         }
+
+        // Verificar si tiene una consulta finalizada que aún no ha cancelado
+        if (dbHelper.tienePagoPendiente(idPaciente)) {
+            Toast.makeText(this, "El paciente tiene una consulta pendiente de pago. Debe cancelarla en Cobros antes de asignarle otra.", Toast.LENGTH_LONG).show();
+            return;
+        }
         
         // Intentar insertar la consulta
         if (dbHelper.insertarConsulta(idPaciente, idMedico, fecha, hora)) {

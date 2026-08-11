@@ -410,9 +410,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     
     public boolean insertarConsulta(int idPaciente, int idMedico, String fecha, String hora) {
-        // Verificar si el paciente tiene consulta activa
-        if (tieneConsultaActiva(idPaciente)) {
-            return false; // Bloquea solo si tiene consulta activa
+        // Bloquea si tiene una consulta activa o una consulta finalizada sin cancelar.
+        // El paciente solo puede optar a otra consulta cuando haya pagado la anterior.
+        if (tieneConsultaPendienteOPago(idPaciente)) {
+            return false;
         }
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -525,16 +526,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             int mes = Integer.parseInt(partes[1]) - 1;
             int dia = Integer.parseInt(partes[2]);
             
+            // Ambas fechas se llevan a las 00:00:00.000 para comparar dias completos
             java.util.Calendar fechaCons = java.util.Calendar.getInstance();
-            fechaCons.set(anio, mes, dia);
+            fechaCons.set(anio, mes, dia, 0, 0, 0);
+            fechaCons.set(java.util.Calendar.MILLISECOND, 0);
             
             java.util.Calendar hoy = java.util.Calendar.getInstance();
             hoy.set(java.util.Calendar.HOUR_OF_DAY, 0);
             hoy.set(java.util.Calendar.MINUTE, 0);
             hoy.set(java.util.Calendar.SECOND, 0);
+            hoy.set(java.util.Calendar.MILLISECOND, 0);
             
             long diff = hoy.getTimeInMillis() - fechaCons.getTimeInMillis();
-            int dias = (int) (diff / (24 * 60 * 60 * 1000));
+            int dias = (int) Math.round(diff / (24.0 * 60 * 60 * 1000));
             
             if (dias > 0) {
                 return dias * VALOR_MORA_DIA;
@@ -658,8 +662,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         HashMap<String, Object> resultado = new HashMap<String, Object>();
         SQLiteDatabase db = this.getReadableDatabase();
         
+        // total_pagado guarda lo que ENTREGO el paciente, por eso se le resta el cambio
         String query = "SELECT COUNT(*) as total_cobros, " +
-                       "SUM(" + KEY_TOTAL_PAGADO + ") as total_recaudado, " +
+                       "SUM(" + KEY_TOTAL_PAGADO + " - " + KEY_CAMBIO + ") as total_recaudado, " +
                        "SUM(" + KEY_MORA + ") as total_mora, " +
                        "SUM(" + KEY_VALOR_BASE + ") as total_base " +
                        "FROM " + TABLE_COBROS + " WHERE " + KEY_FECHA_PAGO + "=?";
