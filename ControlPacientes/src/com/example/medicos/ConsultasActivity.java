@@ -26,7 +26,7 @@ public class ConsultasActivity extends Activity {
     private ArrayList<HashMap<String, String>> consultasData;
     private DatabaseHelper dbHelper;
     
-    @Override
+    @Override 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultas);
