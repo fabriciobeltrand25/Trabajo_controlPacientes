@@ -85,8 +85,8 @@ public class ReportesActivity extends Activity {
     private void reportePacientesMas() {
         listaReportes.clear();
         tvTotales.setText("");
-        listaReportes.add("📊 Pacientes con más consultas");
-        listaReportes.add("-------------------");
+        listaReportes.add("Pacientes con más consultas");
+        //listaReportes.add("-------------------");
         
         ArrayList<HashMap<String, String>> data = dbHelper.reportePacientesMasConsultas();
         if (data.isEmpty()) {
@@ -103,8 +103,8 @@ public class ReportesActivity extends Activity {
     private void reporteMedicosMas() {
         listaReportes.clear();
         tvTotales.setText("");
-        listaReportes.add("📊 Médicos con más consultas");
-        listaReportes.add("-------------------");
+        listaReportes.add("Médicos con más consultas");
+        //listaReportes.add("-------------------");
         
         ArrayList<HashMap<String, String>> data = dbHelper.reporteMedicosMasConsultas();
         if (data.isEmpty()) {
@@ -122,8 +122,8 @@ public class ReportesActivity extends Activity {
     private void reportePacientesMora() {
         listaReportes.clear();
         tvTotales.setText("");
-        listaReportes.add("📊 Pacientes en mora");
-        listaReportes.add("-------------------");
+        listaReportes.add("Pacientes en mora");
+       // listaReportes.add("-------------------");
         
         ArrayList<HashMap<String, String>> data = dbHelper.reportePacientesEnMora();
         if (data.isEmpty()) {
@@ -136,8 +136,8 @@ public class ReportesActivity extends Activity {
                 totalMora += mora;
                 listaReportes.add((i++) + ". " + p.get("paciente") + " - L " + df.format(mora) + " mora");
             }
-            listaReportes.add("-------------------");
-            listaReportes.add("💰 Total mora: L " + df.format(totalMora));
+            //listaReportes.add("-------------------");
+            listaReportes.add("Total mora: L " + df.format(totalMora));
         }
         adapter.notifyDataSetChanged();
     }
@@ -146,8 +146,8 @@ public class ReportesActivity extends Activity {
         listaReportes.clear();
         String fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         tvTotales.setText("");
-        listaReportes.add("📊 Recaudación del día: " + fecha);
-        listaReportes.add("-------------------");
+        listaReportes.add(" Recaudación del día: " + fecha);
+        //listaReportes.add("-------------------");
         
         HashMap<String, Object> data = dbHelper.reporteRecaudacionDia(fecha);
 
@@ -174,10 +174,10 @@ public class ReportesActivity extends Activity {
         if (totalCobros == 0) {
             listaReportes.add("No hay cobros registrados hoy");
         } else {
-            listaReportes.add("💰 Total recaudado: L " + df.format(totalRecaudado));
-            listaReportes.add("📊 Valor base total: L " + df.format(totalBase));
-            listaReportes.add("⚠️ Mora total: L " + df.format(totalMora));
-            listaReportes.add("📋 Total cobros: " + totalCobros);
+            listaReportes.add("Total recaudado: L " + df.format(totalRecaudado));
+            listaReportes.add(" Valor base total: L " + df.format(totalBase));
+            listaReportes.add(" Mora total: L " + df.format(totalMora));
+            listaReportes.add(" Total cobros: " + totalCobros);
 
             tvTotales.setText("Total Recaudado: L " + df.format(totalRecaudado));
         }

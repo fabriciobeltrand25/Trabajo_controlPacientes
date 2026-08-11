@@ -137,7 +137,7 @@ public class CobrosActivity extends Activity {
             listaCobros.add("No hay cobros pendientes para este paciente");
         } else {
             for (HashMap<String, String> c : cobrosData) {
-                listaCobros.add("👤 " + c.get("paciente") + " - " + c.get("medico") + 
+                listaCobros.add("" + c.get("paciente") + " - " + c.get("medico") + 
                                " (L " + c.get("total") + ")");
             }
         }

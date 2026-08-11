@@ -160,8 +160,10 @@ public class ConsultasActivity extends Activity {
             Toast.makeText(this, "Consulta asignada exitosamente", Toast.LENGTH_SHORT).show();
             listarConsultas("todas");
         } else {
-            Toast.makeText(this, "El paciente ya tiene una consulta activa", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "El paciente tiene una consulta activa o un pago pendiente en Cobros", Toast.LENGTH_LONG).show();
         }
+        
+        
     }
     
     private void listarConsultas(String estado) {

@@ -375,35 +375,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     
     // ============ MÉTODOS PARA CONSULTAS ============
     
-    public boolean tieneConsultaActiva(int idPaciente) {
+    public boolean tieneConsultaPendienteOPago(int idPaciente) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_CONSULTAS, null, 
-                KEY_ID_PACIENTE + "=? AND " + KEY_ESTADO + "=?", 
-                new String[]{String.valueOf(idPaciente), "Activa"}, null, null, null);
-        boolean tiene = cursor.getCount() > 0;
+        
+        // Busca si tiene consultas Activas O si tiene consultas Finalizadas sin registro en la tabla cobros
+        String query = "SELECT c.id FROM consultas c " +
+                       "WHERE c.id_paciente = ? " +
+                       "AND (c.estado = 'Activa' OR " +
+                       "(c.estado = 'Finalizada' AND c.id NOT IN (SELECT id_consulta FROM cobros)))";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idPaciente)});
+        boolean tienePendiente = cursor.getCount() > 0;
         cursor.close();
-        db.close();
-        return tiene;
+        
+        return tienePendiente; // Devuelve true si está bloqueado para nueva consulta
     }
     
     public boolean insertarConsulta(int idPaciente, int idMedico, String fecha, String hora) {
-        if (tieneConsultaActiva(idPaciente)) {
-            return false;
+        if (tieneConsultaPendienteOPago(idPaciente)) {
+            return false; // Bloquea la inserción porque tiene consulta activa o pago pendiente
         }
-        
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_ID_PACIENTE, idPaciente);
-        values.put(KEY_ID_MEDICO, idMedico);
-        values.put(KEY_FECHA_CONSULTA, fecha);
-        values.put(KEY_HORA_CONSULTA, hora);
-        values.put(KEY_VALOR_CONSULTA, VALOR_CONSULTA);
-        values.put(KEY_ESTADO, "Activa");
-        
-        long result = db.insert(TABLE_CONSULTAS, null, values);
-        db.close();
-        return result != -1;
+        values.put("id_paciente", idPaciente);
+        values.put("id_medico", idMedico);
+        values.put("fecha_consulta", fecha);
+        values.put("hora", hora);
+        values.put("estado", "Activa");
+
+        long resultado = db.insert("consultas", null, values);
+        return resultado != -1;
     }
+    
+ 
+
     
     public ArrayList<HashMap<String, String>> listarConsultas(String estado) {
         ArrayList<HashMap<String, String>> lista = new ArrayList<HashMap<String, String>>();
