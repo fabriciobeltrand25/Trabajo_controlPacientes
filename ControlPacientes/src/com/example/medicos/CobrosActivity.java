@@ -5,12 +5,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -46,8 +48,8 @@ public class CobrosActivity extends Activity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaCobros);
         lvCobros.setAdapter(adapter);
         
-        // Cargar pacientes en el Spinner al iniciar
-        cargarPacientesSpinner();
+        // Cargar pacientes con deuda en el Spinner
+        cargarPacientesConDeuda();
         
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +57,7 @@ public class CobrosActivity extends Activity {
                 buscarCobros();
             }
         });
-
+        
         btnLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,21 +104,59 @@ public class CobrosActivity extends Activity {
         });
     }
 
-    private void cargarPacientesSpinner() {
-        pacientesData = dbHelper.obtenerTodosPacientes(); 
-        ArrayList<String> nombresPacientes = new ArrayList<String>();
+    private void cargarPacientesConDeuda() {
+        // Obtener solo pacientes que tienen consultas finalizadas sin pagar
+        pacientesData = dbHelper.obtenerPacientesConDeuda();
+        
+        // Lista para mostrar en el Spinner (con formato "Identidad - Nombre" para el desplegable)
+        final ArrayList<String> nombresPacientes = new ArrayList<String>();
         nombresPacientes.add("Seleccione un paciente...");
+        
+        // Lista para almacenar las identidades reales
+        final ArrayList<String> identidadesPacientes = new ArrayList<String>();
+        identidadesPacientes.add(""); // Para la posición 0
         
         if (pacientesData != null) {
             for (HashMap<String, String> p : pacientesData) {
-                // Formato de presentación: "1001 - Juan Perez"
-                nombresPacientes.add(p.get("identidad") + " - " + p.get("nombre"));
+                String identidad = p.get("identidad");
+                String nombre = p.get("nombre");
+                // Para mostrar en el desplegable: "Identidad - Nombre"
+                nombresPacientes.add(identidad + " - " + nombre);
+                // Para almacenar la identidad real
+                identidadesPacientes.add(identidad);
             }
         }
         
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nombresPacientes);
+        // Adaptador personalizado para el Spinner
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nombresPacientes) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text = (TextView) view.findViewById(android.R.id.text1);
+                
+                // En la vista seleccionada (cuando está cerrado), mostrar solo la identidad
+                if (position > 0 && position < identidadesPacientes.size()) {
+                    // Obtener solo la identidad del string "Identidad - Nombre"
+                    String fullText = nombresPacientes.get(position);
+                    String[] parts = fullText.split(" - ");
+                    if (parts.length > 0) {
+                        text.setText(parts[0]); // Mostrar solo la identidad
+                    } else {
+                        text.setText(fullText);
+                    }
+                } else {
+                    // Para la primera opción "Seleccione un paciente..."
+                    text.setText(nombresPacientes.get(position));
+                }
+                return view;
+            }
+        };
+        
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPacientes.setAdapter(adapterSpinner);
+        
+        // Guardar las identidades para usarlas al buscar
+        // (Ya tenemos pacientesData para eso)
     }
     
     private void buscarCobros() {
@@ -131,6 +171,7 @@ public class CobrosActivity extends Activity {
         
         listaCobros.clear();
         cobrosData.clear();
+        
         cobrosData = dbHelper.buscarCobrosPendientes(identidad);
         
         if (cobrosData.isEmpty()) {
@@ -182,6 +223,8 @@ public class CobrosActivity extends Activity {
                         mensaje += "\nCambio: L " + df.format(cambio);
                     }
                     Toast.makeText(CobrosActivity.this, mensaje, Toast.LENGTH_LONG).show();
+                    // Recargar pacientes y cobros después del pago
+                    cargarPacientesConDeuda();
                     buscarCobros();
                 } else {
                     Toast.makeText(CobrosActivity.this, "Error al registrar pago", Toast.LENGTH_SHORT).show();
@@ -192,5 +235,3 @@ public class CobrosActivity extends Activity {
         builder.show();
     }
 }
-
-

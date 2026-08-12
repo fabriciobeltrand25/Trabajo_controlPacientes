@@ -564,6 +564,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
     
+    
+ // ============ NUEVO MÉTODO PARA OBTENER PACIENTES CON DEUDA ============
+
+    public ArrayList<HashMap<String, String>> obtenerPacientesConDeuda() {
+        ArrayList<HashMap<String, String>> lista = new ArrayList<HashMap<String, String>>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        
+        String query = "SELECT DISTINCT p." + KEY_ID + ", p." + KEY_IDENTIDAD + ", p." + KEY_NOMBRE + 
+                       " FROM " + TABLE_PACIENTES + " p " +
+                       " INNER JOIN " + TABLE_CONSULTAS + " c ON p." + KEY_ID + "=c." + KEY_ID_PACIENTE +
+                       " WHERE c." + KEY_ESTADO + "='Finalizada'" +
+                       " AND NOT EXISTS (SELECT 1 FROM " + TABLE_COBROS + " co WHERE co." + KEY_ID_CONSULTA + "=c." + KEY_ID + ")" +
+                       " ORDER BY p." + KEY_NOMBRE;
+        
+        Cursor cursor = db.rawQuery(query, null);
+        
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put(KEY_ID, cursor.getString(cursor.getColumnIndex(KEY_ID)));
+                map.put(KEY_IDENTIDAD, cursor.getString(cursor.getColumnIndex(KEY_IDENTIDAD)));
+                map.put(KEY_NOMBRE, cursor.getString(cursor.getColumnIndex(KEY_NOMBRE)));
+                lista.add(map);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return lista;
+    }
+    
     // ============ MÉTODOS PARA REPORTES ============
     
     public ArrayList<HashMap<String, String>> reportePacientesMasConsultas() {

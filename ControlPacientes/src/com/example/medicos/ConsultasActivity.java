@@ -19,12 +19,13 @@ public class ConsultasActivity extends Activity {
     
     private Spinner spPacientes, spMedicos;
     private EditText etFecha, etHora;
-    private Button btnAsignar, btnListar, btnFinalizar;
+    private Button btnAsignar, btnActivas, btnFinalizadas;
     private ListView lvConsultas;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> listaConsultas;
     private ArrayList<HashMap<String, String>> consultasData;
     private DatabaseHelper dbHelper;
+    private String estadoActual = "todas"; // Para mantener el estado actual
     
     @Override 
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,8 @@ public class ConsultasActivity extends Activity {
         etFecha = (EditText) findViewById(R.id.etFecha);
         etHora = (EditText) findViewById(R.id.etHora);
         btnAsignar = (Button) findViewById(R.id.btnAsignar);
-        btnListar = (Button) findViewById(R.id.btnListar);
-        btnFinalizar = (Button) findViewById(R.id.btnFinalizar);
+        btnActivas = (Button) findViewById(R.id.btnActivas);
+        btnFinalizadas = (Button) findViewById(R.id.btnFinalizadas);
         lvConsultas = (ListView) findViewById(R.id.lvConsultas);
         
         listaConsultas = new ArrayList<String>();
@@ -61,17 +62,25 @@ public class ConsultasActivity extends Activity {
             }
         });
         
-        btnListar.setOnClickListener(new View.OnClickListener() {
+        btnActivas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listarConsultas("todas");
+                estadoActual = "Activa";
+                listarConsultas("Activa");
+                // Resaltar el botón activo
+                btnActivas.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+                btnFinalizadas.setBackgroundColor(0); // Resetear color
             }
         });
         
-        btnFinalizar.setOnClickListener(new View.OnClickListener() {
+        btnFinalizadas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listarConsultas("Activa");
+                estadoActual = "Finalizada";
+                listarConsultas("Finalizada");
+                // Resaltar el botón activo
+                btnFinalizadas.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+                btnActivas.setBackgroundColor(0); // Resetear color
             }
         });
         
@@ -89,7 +98,8 @@ public class ConsultasActivity extends Activity {
                             int idConsulta = Integer.parseInt(consulta.get("id"));
                             if (dbHelper.finalizarConsulta(idConsulta)) {
                                 Toast.makeText(ConsultasActivity.this, "Consulta finalizada", Toast.LENGTH_SHORT).show();
-                                listarConsultas("todas");
+                                // Recargar con el estado actual
+                                listarConsultas(estadoActual.equals("todas") ? "todas" : estadoActual);
                             } else {
                                 Toast.makeText(ConsultasActivity.this, "Error al finalizar", Toast.LENGTH_SHORT).show();
                             }
@@ -103,7 +113,10 @@ public class ConsultasActivity extends Activity {
             }
         });
         
-        listarConsultas("todas");
+        // Cargar consultas activas por defecto
+        estadoActual = "Activa";
+        listarConsultas("Activa");
+        btnActivas.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
     }
     
     private void cargarPacientes() {
@@ -171,7 +184,8 @@ public class ConsultasActivity extends Activity {
         // Intentar insertar la consulta
         if (dbHelper.insertarConsulta(idPaciente, idMedico, fecha, hora)) {
             Toast.makeText(this, "Consulta asignada exitosamente", Toast.LENGTH_SHORT).show();
-            listarConsultas("todas");
+            // Recargar con el estado actual
+            listarConsultas(estadoActual.equals("todas") ? "todas" : estadoActual);
             limpiarCampos();
         } else {
             Toast.makeText(this, "Error al asignar consulta", Toast.LENGTH_LONG).show();
@@ -192,7 +206,10 @@ public class ConsultasActivity extends Activity {
         consultasData = dbHelper.listarConsultas(estado);
         
         if (consultasData.isEmpty()) {
-            listaConsultas.add("No hay consultas");
+            String mensaje = estado.equals("Activa") ? "No hay consultas activas" : 
+                            estado.equals("Finalizada") ? "No hay consultas finalizadas" : 
+                            "No hay consultas";
+            listaConsultas.add(mensaje);
         } else {
             for (HashMap<String, String> c : consultasData) {
                 String icono = c.get("estado").equals("Activa") ? "🟢" : "🔴";
