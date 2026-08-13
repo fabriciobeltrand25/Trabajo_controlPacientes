@@ -181,7 +181,7 @@ public class PacientesActivity extends Activity {
         pacientesData = dbHelper.buscarPacientes(busqueda);
         
         if (pacientesData.isEmpty()) {
-            listaPacientes.add("🔍 Paciente no encontrado");
+            listaPacientes.add("Paciente no encontrado");
         } else {
             for (HashMap<String, String> p : pacientesData) {
                 listaPacientes.add(p.get("identidad") + " - " + p.get("nombre"));
