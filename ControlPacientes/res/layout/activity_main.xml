@@ -9,202 +9,191 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="23dp">
+        android:padding="20dp">
 
+        <!-- Encabezados -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Menú Principal"
-            android:textSize="35sp"
+            android:text="Menú Principal"
+            android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="#333333"
-            android:layout_marginBottom="7dp"/>
+            android:layout_marginBottom="4dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sistema de Control de Pacientes"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="#666666"
-            android:layout_marginBottom="29dp"/>
+            android:layout_marginBottom="24dp"/>
 
-        
+        <!-- Botón: Pacientes (Izquierda -> Derecha) -->
         <LinearLayout
             android:id="@+id/btnPacientes"
             android:layout_width="match_parent"
-            android:layout_height="109dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="12dp"
-            android:layout_marginBottom="17dp">
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
 
             <ImageView
-                android:layout_width="87dp"
-                android:layout_height="87dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:src="@drawable/pacientes"
                 android:scaleType="fitCenter"
                 android:contentDescription="Pacientes"/>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Pacientes"
-                android:textSize="26sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:paddingStart="23dp"
-                android:paddingEnd="23dp"/>
+                android:layout_marginStart="16dp"/>
         </LinearLayout>
 
-        
+        <!-- Botón: Médicos (Derecha -> Izquierda) -->
         <LinearLayout
             android:id="@+id/btnMedicos"
             android:layout_width="match_parent"
-            android:layout_height="109dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|end"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="12dp"
-            android:layout_marginBottom="17dp">
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Médicos"
-                android:textSize="26sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:gravity="end"
-                android:paddingStart="23dp"
-                android:paddingEnd="23dp"/>
+                android:layout_marginEnd="16dp"/>
 
             <ImageView
-                android:layout_width="87dp"
-                android:layout_height="87dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:src="@drawable/medicos"
                 android:scaleType="fitCenter"
                 android:contentDescription="Médicos"/>
         </LinearLayout>
 
-        
+        <!-- Botón: Consultas (Izquierda -> Derecha) -->
         <LinearLayout
             android:id="@+id/btnConsultas"
             android:layout_width="match_parent"
-            android:layout_height="109dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="12dp"
-            android:layout_marginBottom="17dp">
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
 
             <ImageView
-                android:layout_width="87dp"
-                android:layout_height="87dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:src="@drawable/consultas"
                 android:scaleType="fitCenter"
                 android:contentDescription="Consultas"/>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Consultas"
-                android:textSize="26sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:paddingStart="23dp"
-                android:paddingEnd="23dp"/>
+                android:layout_marginStart="16dp"/>
         </LinearLayout>
 
-        
+        <!-- Botón: Cobros (Derecha -> Izquierda) -->
         <LinearLayout
             android:id="@+id/btnCobros"
             android:layout_width="match_parent"
-            android:layout_height="109dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|end"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="12dp"
-            android:layout_marginBottom="17dp">
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Cobros"
-                android:textSize="26sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:gravity="end"
-                android:paddingStart="23dp"
-                android:paddingEnd="23dp"/>
+                android:layout_marginEnd="16dp"/>
 
             <ImageView
-                android:layout_width="87dp"
-                android:layout_height="87dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:src="@drawable/cobros"
                 android:scaleType="fitCenter"
                 android:contentDescription="Cobros"/>
         </LinearLayout>
 
-        
+        <!-- Botón: Reportes (Izquierda -> Derecha) -->
         <LinearLayout
             android:id="@+id/btnReportes"
             android:layout_width="match_parent"
-            android:layout_height="109dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="12dp"
-            android:layout_marginBottom="36dp">
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
 
             <ImageView
-                android:layout_width="87dp"
-                android:layout_height="87dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:src="@drawable/reportes"
                 android:scaleType="fitCenter"
                 android:contentDescription="Reportes"/>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Reportes"
-                android:textSize="26sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
-                android:paddingStart="23dp"
-                android:paddingEnd="23dp"/>
+                android:layout_marginStart="16dp"/>
         </LinearLayout>
 
-       
+        <!-- Botón: Salir -->
         <LinearLayout
             android:id="@+id/btnSalir"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:padding="12dp">
+            android:padding="16dp">
 
             <ImageView
-                android:layout_width="58dp"
-                android:layout_height="58dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:src="@drawable/salir"
                 android:scaleType="fitCenter"
                 android:contentDescription="Salir"/>
@@ -213,10 +202,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Salir"
-                android:textSize="23sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#D32F2F"
-                android:paddingStart="17dp"/>
+                android:layout_marginStart="12dp"/>
         </LinearLayout>
 
     </LinearLayout>
