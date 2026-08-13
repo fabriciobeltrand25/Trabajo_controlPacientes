@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Campos comunes
     private static final String KEY_ID = "id";
     
-    // Campos Médicos
+    // Campos MÃ©dicos
     private static final String KEY_CODIGO = "codigo";
     private static final String KEY_NOMBRE = "nombre";
     private static final String KEY_ESPECIALIDAD = "especialidad";
@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Crear tabla Médicos
+        // Crear tabla MÃ©dicos
         String CREATE_TABLE_MEDICOS = "CREATE TABLE " + TABLE_MEDICOS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_CODIGO + " TEXT UNIQUE,"
@@ -123,23 +123,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     
     private void insertarDatosPrueba(SQLiteDatabase db) {
-        // Insertar Médicos
+        // Insertar MÃ©dicos
         db.execSQL("INSERT INTO " + TABLE_MEDICOS + "(" + KEY_CODIGO + "," + KEY_NOMBRE + "," 
                 + KEY_ESPECIALIDAD + "," + KEY_TELEFONO + "," + KEY_EMAIL + ") VALUES " +
-                "('MED001','Dr. Carlos García','Cardiología','9999-1111','carlos.garcia@hospital.com')," +
-                "('MED002','Dra. María López','Pediatría','9999-2222','maria.lopez@hospital.com')," +
-                "('MED003','Dr. Juan Pérez','Traumatología','9999-3333','juan.perez@hospital.com')," +
-                "('MED004','Dra. Ana Martínez','Ginecología','9999-4444','ana.martinez@hospital.com')," +
-                "('MED005','Dr. Roberto Sánchez','Neurología','9999-5555','roberto.sanchez@hospital.com')");
+                "('MED001','Dr. Carlos GarcÃ­a','CardiologÃ­a','9999-1111','carlos.garcia@hospital.com')," +
+                "('MED002','Dra. MarÃ­a LÃ³pez','PediatrÃ­a','9999-2222','maria.lopez@hospital.com')," +
+                "('MED003','Dr. Juan PÃ©rez','TraumatologÃ­a','9999-3333','juan.perez@hospital.com')," +
+                "('MED004','Dra. Ana MartÃ­nez','GinecologÃ­a','9999-4444','ana.martinez@hospital.com')," +
+                "('MED005','Dr. Roberto SÃ¡nchez','NeurologÃ­a','9999-5555','roberto.sanchez@hospital.com')");
         
         // Insertar Pacientes
         db.execSQL("INSERT INTO " + TABLE_PACIENTES + "(" + KEY_IDENTIDAD + "," + KEY_NOMBRE + "," 
                 + KEY_DIRECCION + "," + KEY_TELEFONO + "," + KEY_FECHA_NAC + ") VALUES " +
-                "('0801-1985-12345','Pedro González','Colonia Miramontes, Casa #123','9999-6666','1985-03-15')," +
-                "('0801-1990-67890','Laura Fernández','Residencial Los Pinos, Casa #45','9999-7777','1990-07-22')," +
-                "('0801-1978-23456','Miguel Rodríguez','Barrio El Centro, #78','9999-8888','1978-11-30')," +
+                "('0801-1985-12345','Pedro GonzÃ¡lez','Colonia Miramontes, Casa #123','9999-6666','1985-03-15')," +
+                "('0801-1990-67890','Laura FernÃ¡ndez','Residencial Los Pinos, Casa #45','9999-7777','1990-07-22')," +
+                "('0801-1978-23456','Miguel RodrÃ­guez','Barrio El Centro, #78','9999-8888','1978-11-30')," +
                 "('0801-1995-78901','Carmen Torres','Colonia Kennedy, Casa #67','9999-9999','1995-05-10')," +
-                "('0801-1982-34567','José Ramírez','Residencial Las Lomas, #90','8888-1111','1982-09-25')");
+                "('0801-1982-34567','JosÃ© RamÃ­rez','Residencial Las Lomas, #90','8888-1111','1982-09-25')");
         
         // Insertar Consultas
         db.execSQL("INSERT INTO " + TABLE_CONSULTAS + "(" + KEY_ID_PACIENTE + "," + KEY_ID_MEDICO + ","
@@ -156,7 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(3,500.00,40.00,600.00,60.00,'2026-08-05')");
     }
     
-    // ============ MÉTODOS CRUD PARA MÉDICOS ============
+    // ============ MÃ‰TODOS CRUD PARA MÃ‰DICOS ============
     
     public boolean insertarMedico(String codigo, String nombre, String especialidad, String telefono, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -234,7 +234,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     
     public boolean eliminarMedico(int id) {
-        // Verificar si tiene consultas
         if (tieneConsultasMedico(id)) {
             return false;
         }
@@ -254,7 +253,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return tiene;
     }
     
-    // ============ MÉTODOS CRUD PARA PACIENTES ============
+    // ============ MÃ‰TODOS CRUD PARA PACIENTES ============
     
     public boolean insertarPaciente(String identidad, String nombre, String direccion, String telefono, String fechaNac) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -352,7 +351,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     
     public boolean eliminarPaciente(int id) {
-        // Verificar si tiene consultas
         if (tieneConsultasPaciente(id)) {
             return false;
         }
@@ -372,9 +370,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return tiene;
     }
     
-    // ============ MÉTODOS PARA CONSULTAS ============
+    // ============ MÃ‰TODOS PARA CONSULTAS ============
     
-    // Método para verificar solo consultas activas
     public boolean tieneConsultaActiva(int idPaciente) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_CONSULTAS, 
@@ -388,7 +385,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return tiene;
     }
     
-    // Método para verificar pagos pendientes
     public boolean tienePagoPendiente(int idPaciente) {
         SQLiteDatabase db = this.getReadableDatabase();
         
@@ -404,14 +400,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return tienePendiente;
     }
     
-    // Método combinado para verificar consulta activa o pago pendiente
     public boolean tieneConsultaPendienteOPago(int idPaciente) {
         return tieneConsultaActiva(idPaciente) || tienePagoPendiente(idPaciente);
     }
     
+    // ============ VERIFICAR DISPONIBILIDAD DEL MÃ‰DICO ============
+    public boolean medicoDisponible(int idMedico, String fecha, String hora) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        
+        String query = "SELECT COUNT(*) as total FROM " + TABLE_CONSULTAS + 
+                       " WHERE " + KEY_ID_MEDICO + "=? AND " + 
+                       KEY_FECHA_CONSULTA + "=? AND " + 
+                       KEY_HORA_CONSULTA + "=? AND " +
+                       KEY_ESTADO + "='Activa'";
+        
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idMedico), fecha, hora});
+        
+        int total = 0;
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndex("total"));
+        }
+        cursor.close();
+        db.close();
+        
+        return total == 0;
+    }
+    
     public boolean insertarConsulta(int idPaciente, int idMedico, String fecha, String hora) {
-        // Bloquea si tiene una consulta activa o una consulta finalizada sin cancelar.
-        // El paciente solo puede optar a otra consulta cuando haya pagado la anterior.
         if (tieneConsultaPendienteOPago(idPaciente)) {
             return false;
         }
@@ -475,7 +490,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result > 0;
     }
     
-    // ============ MÉTODOS PARA COBROS ============
+    // ============ MÃ‰TODOS PARA COBROS ============
     
     public ArrayList<HashMap<String, String>> buscarCobrosPendientes(String identidad) {
         ArrayList<HashMap<String, String>> lista = new ArrayList<HashMap<String, String>>();
@@ -502,7 +517,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 map.put(KEY_VALOR_CONSULTA, cursor.getString(cursor.getColumnIndex(KEY_VALOR_CONSULTA)));
                 map.put(KEY_ESTADO, cursor.getString(cursor.getColumnIndex(KEY_ESTADO)));
                 
-                // Calcular mora
                 String fechaConsulta = cursor.getString(cursor.getColumnIndex(KEY_FECHA_CONSULTA));
                 double valorBase = cursor.getDouble(cursor.getColumnIndex(KEY_VALOR_CONSULTA));
                 double mora = calcularMora(fechaConsulta);
@@ -519,14 +533,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     
     public double calcularMora(String fechaConsulta) {
-        // Simulación: calcular días de diferencia
         try {
             String[] partes = fechaConsulta.split("-");
             int anio = Integer.parseInt(partes[0]);
             int mes = Integer.parseInt(partes[1]) - 1;
             int dia = Integer.parseInt(partes[2]);
             
-            // Ambas fechas se llevan a las 00:00:00.000 para comparar dias completos
             java.util.Calendar fechaCons = java.util.Calendar.getInstance();
             fechaCons.set(anio, mes, dia, 0, 0, 0);
             fechaCons.set(java.util.Calendar.MILLISECOND, 0);
@@ -564,9 +576,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
     
-    
- // ============ NUEVO MÉTODO PARA OBTENER PACIENTES CON DEUDA ============
-
+    // ============ OBTENER PACIENTES CON DEUDA ============
     public ArrayList<HashMap<String, String>> obtenerPacientesConDeuda() {
         ArrayList<HashMap<String, String>> lista = new ArrayList<HashMap<String, String>>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -594,7 +604,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lista;
     }
     
-    // ============ MÉTODOS PARA REPORTES ============
+    // ============ MÃ‰TODOS PARA REPORTES ============
     
     public ArrayList<HashMap<String, String>> reportePacientesMasConsultas() {
         ArrayList<HashMap<String, String>> lista = new ArrayList<HashMap<String, String>>();
@@ -692,7 +702,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         HashMap<String, Object> resultado = new HashMap<String, Object>();
         SQLiteDatabase db = this.getReadableDatabase();
         
-        // total_pagado guarda lo que ENTREGO el paciente, por eso se le resta el cambio
         String query = "SELECT COUNT(*) as total_cobros, " +
                        "SUM(" + KEY_TOTAL_PAGADO + " - " + KEY_CAMBIO + ") as total_recaudado, " +
                        "SUM(" + KEY_MORA + ") as total_mora, " +
