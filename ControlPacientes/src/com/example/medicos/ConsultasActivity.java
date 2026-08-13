@@ -136,10 +136,10 @@ public class ConsultasActivity extends Activity {
                         public void onClick(DialogInterface dialog, int which) {
                             int idConsulta = Integer.parseInt(consulta.get("id"));
                             if (dbHelper.finalizarConsulta(idConsulta)) {
-                                Toast.makeText(ConsultasActivity.this, "✅ Consulta finalizada", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ConsultasActivity.this, "Consulta finalizada", Toast.LENGTH_SHORT).show();
                                 listarConsultas(estadoActual.equals("todas") ? "todas" : estadoActual);
                             } else {
-                                Toast.makeText(ConsultasActivity.this, "❌ Error al finalizar", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ConsultasActivity.this, "Error al finalizar", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -234,12 +234,12 @@ public class ConsultasActivity extends Activity {
         String hora = etHora.getText().toString().trim();
         
         if (fecha.isEmpty()) {
-            Toast.makeText(this, "⚠️ Ingrese la fecha", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ingrese la fecha", Toast.LENGTH_SHORT).show();
             return;
         }
         
         if (hora.isEmpty()) {
-            Toast.makeText(this, "⚠️ Ingrese la hora (Ej: 14:30 o 1430)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "⚠ Ingrese la hora", Toast.LENGTH_SHORT).show();
             return;
         }
         
@@ -247,12 +247,12 @@ public class ConsultasActivity extends Activity {
         String horaFormateada = formatearHora(hora);
         
         if (horaFormateada == null) {
-            Toast.makeText(this, "❌ Formato de hora inválido. Use HH:MM (Ej: 14:30) o HHMM (Ej: 1430)", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Formato de hora inválido. Use HH:MM (Ej: 14:30)", Toast.LENGTH_LONG).show();
             return;
         }
         
         if (!validarHora(horaFormateada)) {
-            Toast.makeText(this, "❌ Hora inválida. Use formato 00:00 a 23:59", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Hora inválida. Use formato 00:00 a 23:59", Toast.LENGTH_LONG).show();
             return;
         }
         
@@ -270,30 +270,30 @@ public class ConsultasActivity extends Activity {
         
         // 1. Verificar si el paciente tiene consulta activa
         if (dbHelper.tieneConsultaActiva(idPaciente)) {
-            Toast.makeText(this, "❌ El paciente ya tiene una consulta activa", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "El paciente ya tiene una consulta activa", Toast.LENGTH_LONG).show();
             return;
         }
 
         // 2. Verificar si tiene una consulta finalizada que aún no ha cancelado
         if (dbHelper.tienePagoPendiente(idPaciente)) {
-            Toast.makeText(this, "❌ El paciente tiene una consulta pendiente de pago. Debe cancelarla en Cobros antes de asignarle otra.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, " El paciente tiene una consulta pendiente de pago. Debe cancelarla en Cobros antes de asignarle otra.", Toast.LENGTH_LONG).show();
             return;
         }
         
         // 3. VERIFICAR DISPONIBILIDAD DEL MÉDICO
         if (!dbHelper.medicoDisponible(idMedico, fecha, horaFormateada)) {
             String nombreMedico = medicos.get(posMedico - 1).get("nombre");
-            Toast.makeText(this, "❌ El Dr(a). " + nombreMedico + " ya tiene una consulta asignada en esa fecha y hora", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "El Dr(a). " + nombreMedico + " ya tiene una consulta asignada en esa fecha y hora", Toast.LENGTH_LONG).show();
             return;
         }
         
         // ============ INSERTAR CONSULTA ============
         if (dbHelper.insertarConsulta(idPaciente, idMedico, fecha, horaFormateada)) {
-            Toast.makeText(this, "✅ Consulta asignada exitosamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, " Consulta asignada exitosamente", Toast.LENGTH_SHORT).show();
             listarConsultas(estadoActual.equals("todas") ? "todas" : estadoActual);
             limpiarCampos();
         } else {
-            Toast.makeText(this, "❌ Error al asignar consulta", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, " Error al asignar consulta", Toast.LENGTH_LONG).show();
         }
     }
     
