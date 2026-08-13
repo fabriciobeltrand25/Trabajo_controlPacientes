@@ -67,9 +67,6 @@ public class ConsultasActivity extends Activity {
             public void onClick(View v) {
                 estadoActual = "Activa";
                 listarConsultas("Activa");
-                // Resaltar el botón activo
-                btnActivas.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-                btnFinalizadas.setBackgroundColor(0); // Resetear color
             }
         });
         
@@ -78,9 +75,6 @@ public class ConsultasActivity extends Activity {
             public void onClick(View v) {
                 estadoActual = "Finalizada";
                 listarConsultas("Finalizada");
-                // Resaltar el botón activo
-                btnFinalizadas.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-                btnActivas.setBackgroundColor(0); // Resetear color
             }
         });
         
@@ -116,7 +110,6 @@ public class ConsultasActivity extends Activity {
         // Cargar consultas activas por defecto
         estadoActual = "Activa";
         listarConsultas("Activa");
-        btnActivas.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
     }
     
     private void cargarPacientes() {
@@ -214,7 +207,7 @@ public class ConsultasActivity extends Activity {
             for (HashMap<String, String> c : consultasData) {
                 String icono = c.get("estado").equals("Activa") ? "🟢" : "🔴";
                 listaConsultas.add(icono + " " + c.get("paciente") + " - " + 
-                                 c.get("medico") + " (" + c.get("fecha_consulta") + ")");
+                                   c.get("medico") + " (" + c.get("fecha_consulta") + ")");
             }
         }
         adapter.notifyDataSetChanged();
