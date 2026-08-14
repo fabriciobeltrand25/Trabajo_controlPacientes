@@ -2,14 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#A5E8A5"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="#D0D0D0">
+    android:padding="10dp" >
 
+    <!-- Encabezado con logo y título -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/medicos"
+            android:contentDescription="Logo Médicos"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -17,7 +25,8 @@
             android:text="Médicos"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#000000"/>
+            android:textColor="#054482"
+            android:layout_marginStart="8dp"/>
 
         <View 
             android:layout_width="0dp" 
@@ -29,28 +38,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Limpiar"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
+            android:background="#08754E"
             android:padding="8dp"/>
     </LinearLayout>
 
+    <!-- Formulario de Médicos -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
         android:orientation="vertical"
-        android:background="#DBDBDB"
-        android:padding="10dp"
-        android:layout_marginTop="10dp">
+        android:padding="12dp"
+        android:elevation="2dp">
 
         <EditText
             android:id="@+id/etCodigo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#F0F4F8"
+            android:backgroundTint="#1F6CD1"
             android:hint="Código"
             android:inputType="text"
-            android:padding="8dp"
-            android:textColor="#000000"
-            android:textColorHint="#666666"
-            android:background="@android:drawable/editbox_background"/>
+            android:padding="12dp"
+            android:textColor="#08274F"
+            android:textColorHint="#666666" />
 
         <EditText
             android:id="@+id/etNombre"
@@ -58,11 +71,12 @@
             android:layout_height="wrap_content"
             android:hint="Nombre completo"
             android:inputType="text"
-            android:padding="8dp"
+            android:padding="12dp"
             android:layout_marginTop="8dp"
-            android:textColor="#000000"
+            android:textColor="#08274F"
             android:textColorHint="#666666"
-            android:background="@android:drawable/editbox_background"/>
+            android:background="#F0F4F8"
+            android:backgroundTint="#1F6CD1"/>
 
         <EditText
             android:id="@+id/etEspecialidad"
@@ -70,11 +84,12 @@
             android:layout_height="wrap_content"
             android:hint="Especialidad"
             android:inputType="text"
-            android:padding="8dp"
+            android:padding="12dp"
             android:layout_marginTop="8dp"
-            android:textColor="#000000"
+            android:textColor="#08274F"
             android:textColorHint="#666666"
-            android:background="@android:drawable/editbox_background"/>
+            android:background="#F0F4F8"
+            android:backgroundTint="#1F6CD1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,10 +104,11 @@
                 android:layout_weight="1"
                 android:hint="Teléfono"
                 android:inputType="phone"
-                android:padding="8dp"
-                android:textColor="#000000"
+                android:padding="12dp"
+                android:textColor="#08274F"
                 android:textColorHint="#666666"
-                android:background="@android:drawable/editbox_background"/>
+                android:background="#F0F4F8"
+                android:backgroundTint="#1F6CD1"/>
 
             <EditText
                 android:id="@+id/etEmail"
@@ -102,10 +118,11 @@
                 android:layout_marginLeft="8dp"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:padding="8dp"
-                android:textColor="#000000"
+                android:padding="12dp"
+                android:textColor="#08274F"
                 android:textColorHint="#666666"
-                android:background="@android:drawable/editbox_background"/>
+                android:background="#F0F4F8"
+                android:backgroundTint="#1F6CD1"/>
         </LinearLayout>
 
         <Button
@@ -113,16 +130,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Guardar Médico"
-            android:textColor="#000000"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"/>
+            android:textColor="#FFFFFF"
+            android:background="#08754E"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"/>
     </LinearLayout>
 
+    <!-- Sección de búsqueda -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="12dp">
 
         <EditText
             android:id="@+id/etBuscar"
@@ -130,17 +149,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Buscar por nombre o especialidad"
-            android:padding="8dp"
-            android:textColor="#000000"
+            android:padding="10dp"
+            android:textColor="#08274F"
             android:textColorHint="#666666"
-            android:background="@android:drawable/editbox_background"/>
+            android:background="#F0F4F8"
+            android:backgroundTint="#1F6CD1"/>
 
         <Button
             android:id="@+id/btnBuscar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buscar"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
+            android:background="#1F6CD1"
             android:padding="10dp"
             android:layout_marginLeft="5dp"/>
 
@@ -149,11 +170,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Todos"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
+            android:background="#054482"
             android:padding="10dp"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
 
+    <!-- Lista de resultados -->
     <ListView
         android:id="@+id/lvMedicos"
         android:layout_width="match_parent"
