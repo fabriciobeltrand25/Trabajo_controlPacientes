@@ -2,89 +2,192 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#A5E8A5"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="#D0D0D0">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reportes"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_marginBottom="10dp"/>
+    android:padding="10dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#DBDBDB"
-        android:padding="10dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
-        <Button
+        <ImageView
+            android:layout_width="62dp"
+            android:layout_height="54dp"
+            android:contentDescription="Logo Reportes"
+            android:src="@drawable/reportes" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="REGISTROS DE CONSULTAS"
+            android:textColor="#054482"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <!-- Pacientes con más consultas -->
+        <LinearLayout
             android:id="@+id/btnPacientesMas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pacientes con más consultas"
-            android:textColor="#000000"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"/>
+            android:background="#08754E"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:layout_marginBottom="5dp">
 
-        <Button
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/pacientes2"
+                android:scaleType="fitCenter"
+                android:contentDescription="Pacientes con más consultas"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pacientes con más consultas"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <!-- Médicos con más consultas -->
+        <LinearLayout
             android:id="@+id/btnMedicosMas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Médicos con más consultas"
-            android:textColor="#000000"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"/>
+            android:background="#1F6CD1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:layout_marginBottom="5dp">
 
-        <Button
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/medicos2"
+                android:scaleType="fitCenter"
+                android:contentDescription="Médicos con más consultas"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Médicos con más consultas"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <!-- Pacientes en mora -->
+        <LinearLayout
             android:id="@+id/btnMora"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pacientes en mora"
-            android:textColor="#000000"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"/>
+            android:background="#054482"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:layout_marginBottom="5dp">
 
-        <Button
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/mora2"
+                android:scaleType="fitCenter"
+                android:contentDescription="Pacientes en mora"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pacientes en mora"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <!-- Recaudación del día -->
+        <LinearLayout
             android:id="@+id/btnRecaudacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recaudación del día"
-            android:textColor="#000000"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"/>
+            android:background="#E67E22"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/recaudacion2"
+                android:scaleType="fitCenter"
+                android:contentDescription="Recaudación del día"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recaudación del día"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <!-- Botón Limpiar -->
 
         <Button
             android:id="@+id/btnLimpiar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#cc4646"
+            android:padding="12dp"
             android:text="Limpiar Reporte"
-            android:textColor="#000000"
-            android:padding="10dp"/>
+            android:textColor="#FFFFFF" />
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvTotales"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_marginTop="10dp"
-        android:background="#C0C0C0"
-        android:textColor="#000000"
+        android:background="#054482"
+        android:padding="10dp"
+        android:text="Totales"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/lvReportes"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:background="#FFFFFF"
-        android:padding="5dp"/>
+        android:padding="5dp" />
 
 </LinearLayout>

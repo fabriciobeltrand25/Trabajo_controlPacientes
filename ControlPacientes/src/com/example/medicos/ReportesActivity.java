@@ -11,13 +11,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ReportesActivity extends Activity {
     
-    private Button btnPacientesMas, btnMedicosMas, btnMora, btnRecaudacion, btnLimpiar;
+    private LinearLayout btnPacientesMas, btnMedicosMas, btnMora, btnRecaudacion;
+    private Button btnLimpiar;
     private ListView lvReportes;
     private TextView tvTotales;
     private ArrayAdapter<String> adapter;
@@ -32,10 +34,10 @@ public class ReportesActivity extends Activity {
         
         dbHelper = new DatabaseHelper(this);
         
-        btnPacientesMas = (Button) findViewById(R.id.btnPacientesMas);
-        btnMedicosMas = (Button) findViewById(R.id.btnMedicosMas);
-        btnMora = (Button) findViewById(R.id.btnMora);
-        btnRecaudacion = (Button) findViewById(R.id.btnRecaudacion);
+        btnPacientesMas = (LinearLayout) findViewById(R.id.btnPacientesMas);
+        btnMedicosMas = (LinearLayout) findViewById(R.id.btnMedicosMas);
+        btnMora = (LinearLayout) findViewById(R.id.btnMora);
+        btnRecaudacion = (LinearLayout) findViewById(R.id.btnRecaudacion);
         btnLimpiar = (Button) findViewById(R.id.btnLimpiar);
         lvReportes = (ListView) findViewById(R.id.lvReportes);
         tvTotales = (TextView) findViewById(R.id.tvTotales);
@@ -86,7 +88,6 @@ public class ReportesActivity extends Activity {
         listaReportes.clear();
         tvTotales.setText("");
         listaReportes.add("Pacientes con más consultas");
-        //listaReportes.add("-------------------");
         
         ArrayList<HashMap<String, String>> data = dbHelper.reportePacientesMasConsultas();
         if (data.isEmpty()) {
@@ -104,7 +105,6 @@ public class ReportesActivity extends Activity {
         listaReportes.clear();
         tvTotales.setText("");
         listaReportes.add("Médicos con más consultas");
-        //listaReportes.add("-------------------");
         
         ArrayList<HashMap<String, String>> data = dbHelper.reporteMedicosMasConsultas();
         if (data.isEmpty()) {
@@ -123,7 +123,6 @@ public class ReportesActivity extends Activity {
         listaReportes.clear();
         tvTotales.setText("");
         listaReportes.add("Pacientes en mora");
-       // listaReportes.add("-------------------");
         
         ArrayList<HashMap<String, String>> data = dbHelper.reportePacientesEnMora();
         if (data.isEmpty()) {
@@ -136,7 +135,6 @@ public class ReportesActivity extends Activity {
                 totalMora += mora;
                 listaReportes.add((i++) + ". " + p.get("paciente") + " - L " + df.format(mora) + " mora");
             }
-            //listaReportes.add("-------------------");
             listaReportes.add("Total mora: L " + df.format(totalMora));
         }
         adapter.notifyDataSetChanged();
@@ -146,8 +144,7 @@ public class ReportesActivity extends Activity {
         listaReportes.clear();
         String fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         tvTotales.setText("");
-        listaReportes.add(" Recaudación del día: " + fecha);
-        //listaReportes.add("-------------------");
+        listaReportes.add("Recaudación del día: " + fecha);
         
         HashMap<String, Object> data = dbHelper.reporteRecaudacionDia(fecha);
 
@@ -175,9 +172,9 @@ public class ReportesActivity extends Activity {
             listaReportes.add("No hay cobros registrados hoy");
         } else {
             listaReportes.add("Total recaudado: L " + df.format(totalRecaudado));
-            listaReportes.add(" Valor base total: L " + df.format(totalBase));
-            listaReportes.add(" Mora total: L " + df.format(totalMora));
-            listaReportes.add(" Total cobros: " + totalCobros);
+            listaReportes.add("Valor base total: L " + df.format(totalBase));
+            listaReportes.add("Mora total: L " + df.format(totalMora));
+            listaReportes.add("Total cobros: " + totalCobros);
 
             tvTotales.setText("Total Recaudado: L " + df.format(totalRecaudado));
         }
