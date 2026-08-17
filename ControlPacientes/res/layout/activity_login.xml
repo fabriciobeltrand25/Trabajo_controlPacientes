@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,36 +9,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="20dp">
 
+        <!-- ================================================= -->
         <!-- ENCABEZADO AZUL -->
+        <!-- ================================================= -->
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="270dp"
             android:background="#075985"
             android:elevation="4dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="10dp">
+
+            <!-- LOGO GRANDE -->
 
             <ImageView
-                android:layout_width="161dp"
-                android:layout_height="80dp"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
                 android:contentDescription="Logo Clínica"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_launcher2" />
 
+            <!-- NOMBRE DE LA CLÍNICA -->
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="CLÍNICA MÉDICA"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <!-- SUBTÍTULO -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,9 +57,14 @@
                 android:text="Sistema de Control de Pacientes"
                 android:textColor="#D8F0FF"
                 android:textSize="12sp" />
+
         </LinearLayout>
 
+
+        <!-- ================================================= -->
         <!-- TARJETA DE LOGIN -->
+        <!-- ================================================= -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,6 +73,8 @@
             android:elevation="3dp"
             android:orientation="vertical"
             android:padding="20dp">
+
+            <!-- TÍTULO -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,6 +85,9 @@
                 android:textColor="#064B7A"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+
+            <!-- USUARIO -->
 
             <EditText
                 android:id="@+id/etUsuario"
@@ -80,6 +100,9 @@
                 android:singleLine="true"
                 android:textColor="#17324D"
                 android:textColorHint="#8A9AA8" />
+
+
+            <!-- CONTRASEÑA -->
 
             <EditText
                 android:id="@+id/etPassword"
@@ -94,6 +117,9 @@
                 android:textColor="#17324D"
                 android:textColorHint="#8A9AA8" />
 
+
+            <!-- BOTÓN LOGIN -->
+
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
@@ -105,7 +131,9 @@
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
         </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>
