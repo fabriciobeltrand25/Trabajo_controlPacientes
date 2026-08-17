@@ -253,6 +253,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return tiene;
     }
     
+ // Verificar si código de médico existe (para guardar)
+    public boolean verificarCodigoMedico(String codigo) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_MEDICOS, 
+            new String[]{"id"}, 
+            "codigo = ?", 
+            new String[]{codigo}, 
+            null, null, null);
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
+    // Verificar si código de médico existe (para editar, excluyendo el registro actual)
+    public boolean verificarCodigoMedico(String codigo, int idExcluir) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_MEDICOS, 
+            new String[]{"id"}, 
+            "codigo = ? AND id != ?", 
+            new String[]{codigo, String.valueOf(idExcluir)}, 
+            null, null, null);
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return exists;
+    }
+    
     // ============ MÉTODOS CRUD PARA PACIENTES ============
     
     public boolean insertarPaciente(String identidad, String nombre, String direccion, String telefono, String fechaNac) {

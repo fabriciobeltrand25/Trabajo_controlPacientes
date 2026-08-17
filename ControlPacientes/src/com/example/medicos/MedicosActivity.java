@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class MedicosActivity extends Activity {
     
@@ -49,6 +52,62 @@ public class MedicosActivity extends Activity {
         medicosData = new ArrayList<HashMap<String, String>>();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaMedicos);
         lvMedicos.setAdapter(adapter);
+        
+        // ============ MÁSCARA PARA TELÉFONO HONDURAS ============
+        etTelefono.addTextChangedListener(new TextWatcher() {
+            private boolean isUpdating = false;
+            
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isUpdating) return;
+                isUpdating = true;
+                
+                // Eliminar todo excepto números
+                String input = s.toString().replaceAll("[^0-9]", "");
+                
+                // Formato: 1234-5678 (8 dígitos)
+                if (input.length() > 4) {
+                    String parte1 = input.substring(0, 4);
+                    String parte2 = input.substring(4, Math.min(input.length(), 8));
+                    input = parte1 + "-" + parte2;
+                }
+                
+                // Si excede 8 dígitos, truncar
+                if (input.replaceAll("[^0-9]", "").length() > 8) {
+                    input = input.substring(0, 9); // 4 dígitos + guión + 4 dígitos = 9
+                }
+                
+                if (!input.equals(s.toString())) {
+                    etTelefono.setText(input);
+                    etTelefono.setSelection(input.length());
+                }
+                
+                isUpdating = false;
+            }
+        });
+        
+        // ============ VALIDACIÓN DE EMAIL EN TIEMPO REAL ============
+        etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            
+            @Override
+            public void afterTextChanged(Editable s) {
+                String email = s.toString().trim();
+                if (!email.isEmpty() && !isValidEmail(email)) {
+                    etEmail.setError("Email inválido (ej: usuario@gmail.com)");
+                }
+            }
+        });
         
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +151,16 @@ public class MedicosActivity extends Activity {
         listarMedicos();
     }
     
+    // ============ MÉTODO PARA VALIDAR EMAIL ============
+    private boolean isValidEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            return false;
+        }
+        // Patrón para email: cualquier nombre + @ + cualquier dominio (gmail.com, hotmail.com, etc)
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return Pattern.matches(emailPattern, email);
+    }
+    
     private void guardarMedico() {
         String codigo = etCodigo.getText().toString().trim();
         String nombre = etNombre.getText().toString().trim();
@@ -99,17 +168,42 @@ public class MedicosActivity extends Activity {
         String telefono = etTelefono.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         
+        // Validar campos obligatorios
         if (codigo.isEmpty() || nombre.isEmpty()) {
-            Toast.makeText(this, "C�digo y Nombre son obligatorios", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "⚠️ Código y Nombre son obligatorios", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        // Validar código (solo números y letras, sin espacios)
+        if (!codigo.matches("^[a-zA-Z0-9]+$")) {
+            Toast.makeText(this, "⚠️ El código solo puede contener letras y números (sin espacios)", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        // Validar formato de teléfono (debe tener guión)
+        if (!telefono.isEmpty() && !telefono.matches("\\d{4}-\\d{4}")) {
+            Toast.makeText(this, "⚠️ Teléfono debe tener formato 1234-5678", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        // Validar email
+        if (!email.isEmpty() && !isValidEmail(email)) {
+            Toast.makeText(this, "⚠️ Email inválido (ej: usuario@gmail.com)", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        // Verificar si el código ya existe (evitar duplicados)
+        if (dbHelper.verificarCodigoMedico(codigo)) {
+            Toast.makeText(this, "❌ Error: El código ya existe", Toast.LENGTH_SHORT).show();
             return;
         }
         
         if (dbHelper.insertarMedico(codigo, nombre, especialidad, telefono, email)) {
-            Toast.makeText(this, "M�dico guardado exitosamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "✅ Médico guardado exitosamente", Toast.LENGTH_SHORT).show();
             limpiarCampos();
             listarMedicos();
         } else {
-            Toast.makeText(this, "Error: El c�digo ya existe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "❌ Error al guardar médico", Toast.LENGTH_SHORT).show();
         }
     }
     
@@ -119,7 +213,7 @@ public class MedicosActivity extends Activity {
         medicosData = dbHelper.listarMedicos();
         
         if (medicosData.isEmpty()) {
-            listaMedicos.add("No hay m�dicos registrados");
+            listaMedicos.add("No hay médicos registrados");
         } else {
             for (HashMap<String, String> m : medicosData) {
                 listaMedicos.add(m.get("codigo") + " - " + m.get("nombre") + " (" + m.get("especialidad") + ")");
@@ -140,7 +234,7 @@ public class MedicosActivity extends Activity {
         medicosData = dbHelper.buscarMedicos(busqueda);
         
         if (medicosData.isEmpty()) {
-            listaMedicos.add("M�dico no encontrado");
+            listaMedicos.add("Médico no encontrado");
         } else {
             for (HashMap<String, String> m : medicosData) {
                 listaMedicos.add(m.get("codigo") + " - " + m.get("nombre") + " (" + m.get("especialidad") + ")");
@@ -158,7 +252,7 @@ public class MedicosActivity extends Activity {
         etBuscar.setText("");
         isEditing = false;
         idEditando = 0;
-        btnGuardar.setText("Guardar M�dico");
+        btnGuardar.setText("Guardar Médico");
         etCodigo.requestFocus();
     }
     
@@ -188,7 +282,7 @@ public class MedicosActivity extends Activity {
         etEspecialidad.setText(medico.get("especialidad"));
         etTelefono.setText(medico.get("telefono"));
         etEmail.setText(medico.get("email"));
-        btnGuardar.setText("Actualizar M�dico");
+        btnGuardar.setText("Actualizar Médico");
         etCodigo.requestFocus();
     }
     
@@ -199,28 +293,58 @@ public class MedicosActivity extends Activity {
         String telefono = etTelefono.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         
+        // Validar campos obligatorios
+        if (codigo.isEmpty() || nombre.isEmpty()) {
+            Toast.makeText(this, "⚠️ Código y Nombre son obligatorios", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        // Validar código (solo números y letras, sin espacios)
+        if (!codigo.matches("^[a-zA-Z0-9]+$")) {
+            Toast.makeText(this, "⚠️ El código solo puede contener letras y números (sin espacios)", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        // Validar formato de teléfono
+        if (!telefono.isEmpty() && !telefono.matches("\\d{4}-\\d{4}")) {
+            Toast.makeText(this, "⚠️ Teléfono debe tener formato 1234-5678", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        // Validar email
+        if (!email.isEmpty() && !isValidEmail(email)) {
+            Toast.makeText(this, "⚠️ Email inválido (ej: usuario@gmail.com)", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        // Verificar si el código ya existe (excluyendo el registro actual)
+        if (dbHelper.verificarCodigoMedico(codigo, idEditando)) {
+            Toast.makeText(this, "❌ Error: El código ya existe", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         if (dbHelper.actualizarMedico(idEditando, codigo, nombre, especialidad, telefono, email)) {
-            Toast.makeText(this, "M�dico actualizado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "✅ Médico actualizado", Toast.LENGTH_SHORT).show();
             limpiarCampos();
             listarMedicos();
         } else {
-            Toast.makeText(this, "Error al actualizar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "❌ Error al actualizar", Toast.LENGTH_SHORT).show();
         }
     }
     
     private void eliminarMedico(final HashMap<String, String> medico) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Eliminar M�dico");
-        builder.setMessage("�Est� seguro de eliminar a " + medico.get("nombre") + "?");
-        builder.setPositiveButton("S�", new DialogInterface.OnClickListener() {
+        builder.setTitle("Eliminar Médico");
+        builder.setMessage("¿Está seguro de eliminar a " + medico.get("nombre") + "?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int id = Integer.parseInt(medico.get("id"));
                 if (dbHelper.eliminarMedico(id)) {
-                    Toast.makeText(MedicosActivity.this, "M�dico eliminado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MedicosActivity.this, "✅ Médico eliminado", Toast.LENGTH_SHORT).show();
                     listarMedicos();
                 } else {
-                    Toast.makeText(MedicosActivity.this, "No se puede eliminar: tiene consultas asociadas", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MedicosActivity.this, "❌ No se puede eliminar: tiene consultas asociadas", Toast.LENGTH_LONG).show();
                 }
             }
         });

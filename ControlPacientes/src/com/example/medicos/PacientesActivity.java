@@ -52,6 +52,66 @@ public class PacientesActivity extends Activity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaPacientes);
         lvPacientes.setAdapter(adapter);
         
+        // ============ MÁSCARA PARA IDENTIDAD HONDURAS ============
+        etIdentidad.addTextChangedListener(new TextWatcher() {
+            private boolean isUpdating = false;
+            
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isUpdating) return;
+                isUpdating = true;
+                
+                // Eliminar todo excepto números
+                String input = s.toString().replaceAll("[^0-9]", "");
+                
+                // Formato: 0318-2006-00518 (4-4-5 = 13 dígitos)
+                if (input.length() > 4) {
+                    String parte1 = input.substring(0, 4);
+                    String resto = input.substring(4);
+                    if (resto.length() > 4) {
+                        String parte2 = resto.substring(0, 4);
+                        String parte3 = resto.substring(4, Math.min(resto.length(), 9));
+                        input = parte1 + "-" + parte2 + "-" + parte3;
+                    } else {
+                        input = parte1 + "-" + resto;
+                    }
+                }
+                
+                // Limitar a 13 dígitos (4+4+5 = 13)
+                String soloNumeros = input.replaceAll("[^0-9]", "");
+                if (soloNumeros.length() > 13) {
+                    // Reconstruir con los primeros 13 dígitos
+                    soloNumeros = soloNumeros.substring(0, 13);
+                    if (soloNumeros.length() > 4) {
+                        String p1 = soloNumeros.substring(0, 4);
+                        String resto = soloNumeros.substring(4);
+                        if (resto.length() > 4) {
+                            String p2 = resto.substring(0, 4);
+                            String p3 = resto.substring(4, Math.min(resto.length(), 9));
+                            input = p1 + "-" + p2 + "-" + p3;
+                        } else {
+                            input = p1 + "-" + resto;
+                        }
+                    } else {
+                        input = soloNumeros;
+                    }
+                }
+                
+                if (!input.equals(s.toString())) {
+                    etIdentidad.setText(input);
+                    etIdentidad.setSelection(input.length());
+                }
+                
+                isUpdating = false;
+            }
+        });
+        
         // ============ MÁSCARA PARA TELÉFONO HONDURAS ============
         etTelefono.addTextChangedListener(new TextWatcher() {
             private boolean isUpdating = false;
@@ -85,6 +145,65 @@ public class PacientesActivity extends Activity {
                 if (!input.equals(s.toString())) {
                     etTelefono.setText(input);
                     etTelefono.setSelection(input.length());
+                }
+                
+                isUpdating = false;
+            }
+        });
+        
+        // ============ MÁSCARA PARA FECHA DE NACIMIENTO (DD/MM/YYYY) ============
+        etFechaNac.addTextChangedListener(new TextWatcher() {
+            private boolean isUpdating = false;
+            
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isUpdating) return;
+                isUpdating = true;
+                
+                // Eliminar todo excepto números
+                String input = s.toString().replaceAll("[^0-9]", "");
+                
+                // Formato: DD/MM/YYYY (8 dígitos)
+                if (input.length() > 2) {
+                    String dia = input.substring(0, 2);
+                    String resto = input.substring(2);
+                    if (resto.length() > 2) {
+                        String mes = resto.substring(0, 2);
+                        String anio = resto.substring(2, Math.min(resto.length(), 6));
+                        input = dia + "/" + mes + "/" + anio;
+                    } else {
+                        input = dia + "/" + resto;
+                    }
+                }
+                
+                // Limitar a 8 dígitos (DDMMYYYY)
+                String soloNumeros = input.replaceAll("[^0-9]", "");
+                if (soloNumeros.length() > 8) {
+                    soloNumeros = soloNumeros.substring(0, 8);
+                    if (soloNumeros.length() > 2) {
+                        String d = soloNumeros.substring(0, 2);
+                        String resto = soloNumeros.substring(2);
+                        if (resto.length() > 2) {
+                            String m = resto.substring(0, 2);
+                            String a = resto.substring(2, Math.min(resto.length(), 6));
+                            input = d + "/" + m + "/" + a;
+                        } else {
+                            input = d + "/" + resto;
+                        }
+                    } else {
+                        input = soloNumeros;
+                    }
+                }
+                
+                if (!input.equals(s.toString())) {
+                    etFechaNac.setText(input);
+                    etFechaNac.setSelection(input.length());
                 }
                 
                 isUpdating = false;
@@ -145,12 +264,25 @@ public class PacientesActivity extends Activity {
             return;
         }
         
+        // Validar formato de identidad (13 dígitos con guiones)
+        String identidadLimpia = identidad.replaceAll("-", "");
+        if (identidadLimpia.length() != 13) {
+            Toast.makeText(this, "⚠️ La identidad debe tener 13 dígitos (ej: 0318-2006-00518)", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        // Validar formato de fecha (DD/MM/YYYY)
+        if (!fechaNac.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            Toast.makeText(this, "⚠️ Fecha debe tener formato DD/MM/YYYY (ej: 07/12/2006)", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
         if (dbHelper.insertarPaciente(identidad, nombre, direccion, telefono, fechaNac)) {
-            Toast.makeText(this, " Paciente guardado exitosamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "✅ Paciente guardado exitosamente", Toast.LENGTH_SHORT).show();
             limpiarCampos();
             listarPacientes();
         } else {
-            Toast.makeText(this, " Error: La identidad ya existe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "❌ Error: La identidad ya existe", Toast.LENGTH_SHORT).show();
         }
     }
     
@@ -240,12 +372,25 @@ public class PacientesActivity extends Activity {
         String telefono = etTelefono.getText().toString().trim();
         String fechaNac = etFechaNac.getText().toString().trim();
         
+        // Validar formato de identidad (13 dígitos con guiones)
+        String identidadLimpia = identidad.replaceAll("-", "");
+        if (identidadLimpia.length() != 13) {
+            Toast.makeText(this, "⚠️ La identidad debe tener 13 dígitos (ej: 0318-2006-00518)", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        // Validar formato de fecha (DD/MM/YYYY)
+        if (!fechaNac.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            Toast.makeText(this, "⚠️ Fecha debe tener formato DD/MM/YYYY (ej: 07/12/2006)", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
         if (dbHelper.actualizarPaciente(idEditando, identidad, nombre, direccion, telefono, fechaNac)) {
-            Toast.makeText(this, "Paciente actualizado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "✅ Paciente actualizado", Toast.LENGTH_SHORT).show();
             limpiarCampos();
             listarPacientes();
         } else {
-            Toast.makeText(this, "Error al actualizar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "❌ Error al actualizar", Toast.LENGTH_SHORT).show();
         }
     }
     
@@ -258,10 +403,10 @@ public class PacientesActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 int id = Integer.parseInt(paciente.get("id"));
                 if (dbHelper.eliminarPaciente(id)) {
-                    Toast.makeText(PacientesActivity.this, "Paciente eliminado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PacientesActivity.this, "✅ Paciente eliminado", Toast.LENGTH_SHORT).show();
                     listarPacientes();
                 } else {
-                    Toast.makeText(PacientesActivity.this, " No se puede eliminar: tiene consultas asociadas", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PacientesActivity.this, "❌ No se puede eliminar: tiene consultas asociadas", Toast.LENGTH_LONG).show();
                 }
             }
         });
