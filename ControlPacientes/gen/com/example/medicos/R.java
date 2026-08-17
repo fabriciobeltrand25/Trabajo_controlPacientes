@@ -32,7 +32,9 @@ public final class R {
         public static final int pacientes2=0x7f020007;
         public static final int recaudacion2=0x7f020008;
         public static final int reportes=0x7f020009;
-        public static final int salir=0x7f02000a;
+        public static final int rounded_edittext=0x7f02000a;
+        public static final int salir=0x7f02000b;
+        public static final int spinner_background=0x7f02000c;
     }
     public static final class id {
         public static final int action_settings=0x7f080028;
