@@ -201,6 +201,58 @@ public class CobrosActivity extends Activity {
         
         final EditText input = new EditText(this);
         input.setHint("Ingrese monto a pagar");
+        
+        // ============ VALIDACIÓN: SOLO NÚMEROS Y UN PUNTO DECIMAL ============
+        input.addTextChangedListener(new android.text.TextWatcher() {
+            private boolean isUpdating = false;
+            
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            
+            @Override
+            public void afterTextChanged(android.text.Editable s) {
+                if (isUpdating) return;
+                isUpdating = true;
+                
+                String inputText = s.toString();
+                // Permitir solo números y un punto decimal
+                String filtered = inputText.replaceAll("[^\\d.]", "");
+                
+                // Asegurar que solo haya un punto decimal
+                int dotCount = 0;
+                StringBuilder sb = new StringBuilder();
+                for (char c : filtered.toCharArray()) {
+                    if (c == '.') {
+                        dotCount++;
+                        if (dotCount <= 1) {
+                            sb.append(c);
+                        }
+                    } else {
+                        sb.append(c);
+                    }
+                }
+                
+                // Si el primer carácter es punto, agregar un 0 antes
+                String result = sb.toString();
+                if (result.startsWith(".")) {
+                    result = "0" + result;
+                }
+                
+                if (!result.equals(inputText)) {
+                    s.replace(0, s.length(), result);
+                }
+                
+                isUpdating = false;
+            }
+        });
+        
+        // Agregar también un filtro para el teclado (solo números decimales)
+        input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | 
+                           android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        
         builder.setView(input);
         
         builder.setPositiveButton("Pagar", new DialogInterface.OnClickListener() {
@@ -211,23 +263,38 @@ public class CobrosActivity extends Activity {
                     Toast.makeText(CobrosActivity.this, "Ingrese el monto", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                double monto = Double.parseDouble(montoStr);
-                if (monto < total) {
-                    Toast.makeText(CobrosActivity.this, "El pago debe ser mayor o igual a L " + df.format(total), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                double cambio = monto - total;
-                if (dbHelper.registrarCobro(idConsulta, valorBase, mora, monto, cambio)) {
-                    String mensaje = "Pago registrado exitosamente";
-                    if (cambio > 0) {
-                        mensaje += "\nCambio: L " + df.format(cambio);
+                
+                try {
+                    double monto = Double.parseDouble(montoStr);
+                    if (monto < total) {
+                        Toast.makeText(CobrosActivity.this, "El pago debe ser mayor o igual a L " + df.format(total), Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                    Toast.makeText(CobrosActivity.this, mensaje, Toast.LENGTH_LONG).show();
-                    // Recargar pacientes y cobros después del pago
-                    cargarPacientesConDeuda();
-                    buscarCobros();
-                } else {
-                    Toast.makeText(CobrosActivity.this, "Error al registrar pago", Toast.LENGTH_SHORT).show();
+                    double cambio = monto - total;
+                    if (dbHelper.registrarCobro(idConsulta, valorBase, mora, monto, cambio)) {
+                        String mensaje = "Pago registrado exitosamente";
+                        if (cambio > 0) {
+                            mensaje += "\nCambio: L " + df.format(cambio);
+                        }
+                        Toast.makeText(CobrosActivity.this, mensaje, Toast.LENGTH_LONG).show();
+                        
+                        // ============ LIMPIAR HISTORIAL AUTOMÁTICAMENTE ============
+                        // Recargar pacientes y cobros después del pago
+                        cargarPacientesConDeuda();
+                        // Limpiar la lista y el historial
+                        listaCobros.clear();
+                        cobrosData.clear();
+                        adapter.notifyDataSetChanged();
+                        // Resetear el spinner a la posición inicial
+                        if (spPacientes.getAdapter() != null && spPacientes.getAdapter().getCount() > 0) {
+                            spPacientes.setSelection(0);
+                        }
+                        Toast.makeText(CobrosActivity.this, "✅ Historial limpiado", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(CobrosActivity.this, "Error al registrar pago", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (NumberFormatException e) {
+                    Toast.makeText(CobrosActivity.this, "Ingrese un monto válido", Toast.LENGTH_SHORT).show();
                 }
             }
         });

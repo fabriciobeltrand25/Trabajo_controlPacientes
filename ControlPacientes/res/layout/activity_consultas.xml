@@ -186,14 +186,15 @@
                 android:layout_marginBottom="4dp" />
 
             <!-- LISTA (Altura fija para no causar conflictos de scroll) -->
+
             <ListView
                 android:id="@+id/lvConsultas"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="296dp"
                 android:background="#FFFFFF"
-                android:padding="5dp"
                 android:divider="#D8E3EA"
-                android:dividerHeight="1dp" />
+                android:dividerHeight="1dp"
+                android:padding="5dp" />
 
         </LinearLayout>
     </ScrollView>
