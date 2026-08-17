@@ -6,16 +6,10 @@
     android:background="#EAF4FB"
     android:padding="12dp">
 
-    <!-- ================================================= -->
-    <!-- ENCABEZADO -->
-    <!-- ================================================= -->
-    
-    
     <!-- ENCABEZADO AZUL -->
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="#075985"
@@ -23,8 +17,8 @@
         android:elevation="4dp">
 
         <ImageView
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/pacientes"
             android:contentDescription="Logo Pacientes" />
 
@@ -39,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CONTROL DE PACIENTES"
-                android:textSize="19sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF" />
 
@@ -64,216 +58,189 @@
 
     </LinearLayout>
 
-
-
-    <!-- ================================================= -->
-    <!-- TARJETA FORMULARIO -->
-    <!-- ================================================= -->
-
-    <LinearLayout
+    <!-- ÁREA CON SCROLL (Para que el teclado no tape nada) -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#FFFFFF"
-        android:padding="14dp"
-        android:layout_marginTop="8dp"
-        android:elevation="3dp">
-
-        <!-- Título -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Datos del paciente"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="#064B7A"
-            android:layout_marginBottom="10dp" />
-
-
-        <!-- Identidad -->
-
-        <EditText
-            android:id="@+id/etIdentidad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Número de identidad"
-            android:inputType="text"
-            android:singleLine="true"
-            android:padding="12dp"
-            android:textColor="#17324D"
-            android:textColorHint="#8A9AA8"
-            android:background="@drawable/rounded_edittext" />
-
-
-        <!-- Nombre -->
-
-        <EditText
-            android:id="@+id/etNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nombre completo"
-            android:inputType="textPersonName"
-            android:singleLine="true"
-            android:padding="12dp"
-            android:layout_marginTop="8dp"
-            android:textColor="#17324D"
-            android:textColorHint="#8A9AA8"
-            android:background="@drawable/rounded_edittext" />
-
-
-        <!-- Dirección -->
-
-        <EditText
-            android:id="@+id/etDireccion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Dirección"
-            android:inputType="textCapSentences"
-            android:singleLine="true"
-            android:padding="12dp"
-            android:layout_marginTop="8dp"
-            android:textColor="#17324D"
-            android:textColorHint="#8A9AA8"
-            android:background="@drawable/rounded_edittext" />
-
-
-        <!-- Teléfono y fecha -->
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/etTelefono"
-                android:layout_width="0dp"
+            <!-- TARJETA FORMULARIO -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Teléfono"
-                android:inputType="phone"
-                android:singleLine="true"
-                android:padding="12dp"
-                android:textColor="#17324D"
-                android:textColorHint="#8A9AA8"
-                android:background="@drawable/rounded_edittext" />
+                android:orientation="vertical"
+                android:background="#FFFFFF"
+                android:padding="14dp"
+                android:layout_marginTop="8dp"
+                android:elevation="3dp">
 
-            <EditText
-                android:id="@+id/etFechaNac"
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Datos del paciente"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#064B7A"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/etIdentidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Número de identidad"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:textColor="#17324D"
+                    android:textColorHint="#8A9AA8"
+                    android:background="@drawable/rounded_edittext" />
+
+                <EditText
+                    android:id="@+id/etNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre completo"
+                    android:inputType="textPersonName"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:layout_marginTop="6dp"
+                    android:textColor="#17324D"
+                    android:textColorHint="#8A9AA8"
+                    android:background="@drawable/rounded_edittext" />
+
+                <EditText
+                    android:id="@+id/etDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Dirección"
+                    android:inputType="textCapSentences"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:layout_marginTop="6dp"
+                    android:textColor="#17324D"
+                    android:textColorHint="#8A9AA8"
+                    android:background="@drawable/rounded_edittext" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp">
+
+                    <EditText
+                        android:id="@+id/etTelefono"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Teléfono"
+                        android:inputType="phone"
+                        android:singleLine="true"
+                        android:padding="10dp"
+                        android:textColor="#17324D"
+                        android:textColorHint="#8A9AA8"
+                        android:background="@drawable/rounded_edittext" />
+
+                    <EditText
+                        android:id="@+id/etFechaNac"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="6dp"
+                        android:hint="Fecha nacimiento"
+                        android:inputType="date"
+                        android:singleLine="true"
+                        android:padding="10dp"
+                        android:textColor="#17324D"
+                        android:textColorHint="#8A9AA8"
+                        android:background="@drawable/rounded_edittext" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnGuardar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="GUARDAR PACIENTE"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:background="#16845A"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp" />
+
+            </LinearLayout>
+
+            <!-- BÚSQUEDA -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="8dp"
-                android:hint="Fecha nacimiento"
-                android:inputType="date"
-                android:singleLine="true"
-                android:padding="12dp"
-                android:textColor="#17324D"
-                android:textColorHint="#8A9AA8"
-                android:background="@drawable/rounded_edittext" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/etBuscar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Buscar paciente..."
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:textColor="#17324D"
+                    android:textColorHint="#8A9AA8"
+                    android:background="@drawable/rounded_edittext" />
+
+                <Button
+                    android:id="@+id/btnBuscar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buscar"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:background="#1976D2"
+                    android:padding="8dp"
+                    android:layout_marginLeft="6dp" />
+
+                <Button
+                    android:id="@+id/btnListar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Todos"
+                    android:textColor="#FFFFFF"
+                    android:background="#064B7A"
+                    android:padding="8dp"
+                    android:layout_marginLeft="4dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pacientes registrados"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#064B7A"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- LISTA (Altura delimitada para evitar conflictos con ScrollView) -->
+            <ListView
+                android:id="@+id/lvPacientes"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="#FFFFFF"
+                android:padding="5dp"
+                android:divider="#D8E3EA"
+                android:dividerHeight="1dp" />
 
         </LinearLayout>
-
-
-        <!-- Guardar -->
-
-        <Button
-            android:id="@+id/btnGuardar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GUARDAR PACIENTE"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:background="#16845A"
-            android:padding="13dp"
-            android:layout_marginTop="12dp" />
-
-    </LinearLayout>
-
-
-    <!-- ================================================= -->
-    <!-- BÚSQUEDA -->
-    <!-- ================================================= -->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginTop="12dp">
-
-        <EditText
-            android:id="@+id/etBuscar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Buscar paciente..."
-            android:inputType="text"
-            android:singleLine="true"
-            android:padding="11dp"
-            android:textColor="#17324D"
-            android:textColorHint="#8A9AA8"
-            android:background="@drawable/rounded_edittext" />
-
-        <Button
-            android:id="@+id/btnBuscar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Buscar"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:background="#1976D2"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginLeft="6dp" />
-
-        <Button
-            android:id="@+id/btnListar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Todos"
-            android:textColor="#FFFFFF"
-            android:background="#064B7A"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginLeft="5dp" />
-
-    </LinearLayout>
-
-
-    <!-- ================================================= -->
-    <!-- TÍTULO LISTA -->
-    <!-- ================================================= -->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pacientes registrados"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#064B7A"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="6dp" />
-
-
-    <!-- ================================================= -->
-    <!-- LISTA -->
-    <!-- ================================================= -->
-
-    <ListView
-        android:id="@+id/lvPacientes"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:padding="5dp"
-        android:divider="#D8E3EA"
-        android:dividerHeight="1dp" />
+    </ScrollView>
 
 </LinearLayout>

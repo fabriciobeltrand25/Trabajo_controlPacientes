@@ -1,127 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EAF4FB"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="20dp" >
-
-    <!-- ================================================= -->
-    <!-- ENCABEZADO AZUL -->
-    <!-- ================================================= -->
-
-    <LinearLayout
-        android:layout_width="327dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.17"
-        android:background="#075985"
-        android:elevation="4dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="16dp" >
-
-        <!-- Logo Centrado -->
-
-        <ImageView
-            android:layout_width="161dp"
-            android:layout_height="80dp"
-            android:layout_weight="0.10"
-            android:contentDescription="Logo Clínica"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_launcher2" />
-
-        <!-- Título principal abajo del logo -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="CLÍNICA MÉDICA"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <!-- Subtítulo -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:gravity="center"
-            android:text="Sistema de Control de Pacientes"
-            android:textColor="#D8F0FF"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-    <!-- ================================================= -->
-    <!-- TARJETA DE LOGIN -->
-    <!-- ================================================= -->
+    android:fillViewport="true"
+    android:background="#EAF4FB">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
-        android:elevation="3dp"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="20dp" >
+        android:padding="20dp">
 
-        <!-- Título -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
-            android:text="Iniciar Sesión"
-            android:textColor="#064B7A"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <!-- Usuario -->
-
-        <EditText
-            android:id="@+id/etUsuario"
+        <!-- ENCABEZADO AZUL -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_edittext"
-            android:hint="Usuario"
-            android:inputType="text"
-            android:padding="12dp"
-            android:singleLine="true"
-            android:textColor="#17324D"
-            android:textColorHint="#8A9AA8" />
+            android:background="#075985"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <!-- Contraseña -->
+            <ImageView
+                android:layout_width="161dp"
+                android:layout_height="80dp"
+                android:contentDescription="Logo Clínica"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_launcher2" />
 
-        <EditText
-            android:id="@+id/etPassword"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="CLÍNICA MÉDICA"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:text="Sistema de Control de Pacientes"
+                android:textColor="#D8F0FF"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- TARJETA DE LOGIN -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_edittext"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:padding="12dp"
-            android:singleLine="true"
-            android:textColor="#17324D"
-            android:textColorHint="#8A9AA8" />
+            android:layout_marginTop="20dp"
+            android:background="#FFFFFF"
+            android:elevation="3dp"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <!-- Botón Iniciar Sesión -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:text="Iniciar Sesión"
+                android:textColor="#064B7A"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="#16845A"
-            android:padding="13dp"
-            android:text="INICIAR SESIÓN"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/etUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edittext"
+                android:hint="Usuario"
+                android:inputType="text"
+                android:padding="12dp"
+                android:singleLine="true"
+                android:textColor="#17324D"
+                android:textColorHint="#8A9AA8" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:singleLine="true"
+                android:textColor="#17324D"
+                android:textColorHint="#8A9AA8" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="#16845A"
+                android:padding="13dp"
+                android:text="INICIAR SESIÓN"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

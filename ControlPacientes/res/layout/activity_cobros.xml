@@ -6,13 +6,10 @@
     android:background="#EAF4FB"
     android:padding="12dp">
 
-    <!-- ================================================= -->
     <!-- ENCABEZADO AZUL -->
-    <!-- ================================================= -->
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="#075985"
@@ -51,118 +48,122 @@
 
     </LinearLayout>
 
-    <!-- ================================================= -->
-    <!-- TARJETA FORMULARIO -->
-    <!-- ================================================= -->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#FFFFFF"
-        android:padding="14dp"
-        android:layout_marginTop="8dp"
-        android:elevation="3dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Registro de pago"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="#064B7A"
-            android:layout_marginBottom="10dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/spPacientes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/spinner_background"
-                android:padding="12dp" />
-
-            <Button
-                android:id="@+id/btnBuscar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Buscar"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:background="#1976D2"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_marginLeft="6dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <Button
-                android:id="@+id/btnPagar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="PAGAR CONSULTA"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:background="#16845A"
-                android:padding="11dp" />
-
-            <Button
-                android:id="@+id/btnLimpiar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:text="LIMPIAR"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:background="#064B7A"
-                android:padding="11dp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- ================================================= -->
-    <!-- TÍTULO LISTA -->
-    <!-- ================================================= -->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Historial de cobros"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#064B7A"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="6dp" />
-
-    <!-- ================================================= -->
-    <!-- LISTA -->
-    <!-- ================================================= -->
-
-    <ListView
-        android:id="@+id/lvCobros"
+    <!-- ÁREA CON SCROLL -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:padding="5dp"
-        android:divider="#D8E3EA"
-        android:dividerHeight="1dp" />
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- TARJETA FORMULARIO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFFFFF"
+                android:padding="14dp"
+                android:layout_marginTop="8dp"
+                android:elevation="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Registro de pago"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="#064B7A"
+                    android:layout_marginBottom="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spPacientes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/spinner_background"
+                        android:padding="12dp" />
+
+                    <Button
+                        android:id="@+id/btnBuscar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Buscar"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:background="#1976D2"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:layout_marginLeft="6dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <Button
+                        android:id="@+id/btnPagar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="PAGAR CONSULTA"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:background="#16845A"
+                        android:padding="11dp" />
+
+                    <Button
+                        android:id="@+id/btnLimpiar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:text="LIMPIAR"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:background="#064B7A"
+                        android:padding="11dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Historial de cobros"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#064B7A"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp" />
+
+            <!-- LISTA (Altura fija para no conflictuar con el ScrollView) -->
+            <ListView
+                android:id="@+id/lvCobros"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="#FFFFFF"
+                android:padding="5dp"
+                android:divider="#D8E3EA"
+                android:dividerHeight="1dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

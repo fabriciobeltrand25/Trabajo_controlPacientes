@@ -18,7 +18,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="Login"
-            >
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,22 +27,34 @@
         </activity>
 
         <!-- MainActivity (Menú) -->
-        <activity android:name=".MainActivity" />
+        <activity 
+            android:name=".MainActivity" 
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Pacientes -->
-        <activity android:name=".PacientesActivity" />
+        <activity 
+            android:name=".PacientesActivity" 
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Médicos -->
-        <activity android:name=".MedicosActivity" />
+        <activity 
+            android:name=".MedicosActivity" 
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Consultas -->
-        <activity android:name=".ConsultasActivity" />
+        <activity 
+            android:name=".ConsultasActivity" 
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Cobros -->
-        <activity android:name=".CobrosActivity" />
+        <activity 
+            android:name=".CobrosActivity" 
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Reportes -->
-        <activity android:name=".ReportesActivity" />
+        <activity 
+            android:name=".ReportesActivity" 
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
