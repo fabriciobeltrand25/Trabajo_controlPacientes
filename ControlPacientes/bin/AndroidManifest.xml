@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.medicos"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="29"
@@ -12,48 +12,37 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher2"
         android:label="Control Médicos"
-        android:theme="@android:style/Theme.Holo.Light">
+        android:theme="@android:style/Theme.Holo.Light" >
 
+        <!-- Login debe ser la principal (LAUNCHER) -->
         <activity
-            android:name="com.example.medicos.LoginActivity"
-            android:label="Inicio de Sesión"
-            android:screenOrientation="portrait">
+            android:name=".LoginActivity"
+            android:label="Login"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.example.medicos.MainActivity"
-            android:label="Menú Principal"
-            android:screenOrientation="portrait" />
+        <!-- MainActivity (Menú) -->
+        <activity android:name=".MainActivity" />
 
-        <activity
-            android:name="com.example.medicos.PacientesActivity"
-            android:label="Pacientes"
-            android:screenOrientation="portrait" />
+        <!-- Pacientes -->
+        <activity android:name=".PacientesActivity" />
 
-        <activity
-            android:name="com.example.medicos.MedicosActivity"
-            android:label="Médicos"
-            android:screenOrientation="portrait" />
+        <!-- Médicos -->
+        <activity android:name=".MedicosActivity" />
 
-        <activity
-            android:name="com.example.medicos.ConsultasActivity"
-            android:label="Consultas"
-            android:screenOrientation="portrait" />
+        <!-- Consultas -->
+        <activity android:name=".ConsultasActivity" />
 
-        <activity
-            android:name="com.example.medicos.CobrosActivity"
-            android:label="Cobros"
-            android:screenOrientation="portrait" />
+        <!-- Cobros -->
+        <activity android:name=".CobrosActivity" />
 
-        <activity
-            android:name="com.example.medicos.ReportesActivity"
-            android:label="Reportes"
-            android:screenOrientation="portrait" />
-
+        <!-- Reportes -->
+        <activity android:name=".ReportesActivity" />
     </application>
 
 </manifest>
