@@ -249,34 +249,34 @@ public class ConsultasActivity extends Activity {
 		spMedicos.setAdapter(adapter);
 	}
 
-	// Agrega este método en ConsultasActivity
+	
 	private boolean validarFechaNoPasada(String fecha) {
-		try {
-			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-			sdf.setLenient(false);
-			java.util.Date fechaConsulta = sdf.parse(fecha);
-			java.util.Date hoy = new java.util.Date();
+	    try {
+	        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+	        sdf.setLenient(false);
+	        java.util.Date fechaConsulta = sdf.parse(fecha);
 
-			// Comparar solo fechas (sin hora)
-			java.util.Calendar calFecha = java.util.Calendar.getInstance();
-			calFecha.setTime(fechaConsulta);
-			calFecha.set(java.util.Calendar.HOUR_OF_DAY, 0);
-			calFecha.set(java.util.Calendar.MINUTE, 0);
-			calFecha.set(java.util.Calendar.SECOND, 0);
-			calFecha.set(java.util.Calendar.MILLISECOND, 0);
+	        // Obtener el inicio del día de HOY (00:00:00.000)
+	        java.util.Calendar calHoy = java.util.Calendar.getInstance();
+	        calHoy.set(java.util.Calendar.HOUR_OF_DAY, 0);
+	        calHoy.set(java.util.Calendar.MINUTE, 0);
+	        calHoy.set(java.util.Calendar.SECOND, 0);
+	        calHoy.set(java.util.Calendar.MILLISECOND, 0);
 
-			java.util.Calendar calHoy = java.util.Calendar.getInstance();
-			calHoy.set(java.util.Calendar.HOUR_OF_DAY, 0);
-			calHoy.set(java.util.Calendar.MINUTE, 0);
-			calHoy.set(java.util.Calendar.SECOND, 0);
-			calHoy.set(java.util.Calendar.MILLISECOND, 0);
+	        // Obtener la fecha a evaluar a la medianoche (00:00:00.000)
+	        java.util.Calendar calConsulta = java.util.Calendar.getInstance();
+	        calConsulta.setTime(fechaConsulta);
+	        calConsulta.set(java.util.Calendar.HOUR_OF_DAY, 0);
+	        calConsulta.set(java.util.Calendar.MINUTE, 0);
+	        calConsulta.set(java.util.Calendar.SECOND, 0);
+	        calConsulta.set(java.util.Calendar.MILLISECOND, 0);
 
-			// Si la fecha de consulta es anterior a hoy, no es válida
-			return !calFecha.before(calHoy);
+	        
+	        return !calConsulta.before(calHoy);
 
-		} catch (java.text.ParseException e) {
-			return false;
-		}
+	    } catch (java.text.ParseException e) {
+	        return false;
+	    }
 	}
 
 	// ============ VALIDAR FORMATO DE FECHA ============
@@ -437,12 +437,12 @@ public class ConsultasActivity extends Activity {
 		consultasData = dbHelper.listarConsultas(estado);
 
 		if (consultasData.isEmpty()) {
-			String mensaje = estado.equals("Activa") ? "📭 No hay consultas activas"
-					: estado.equals("Finalizada") ? "📭 No hay consultas finalizadas" : "📭 No hay consultas";
+			String mensaje = estado.equals("Activa") ? "No hay consultas activas"
+					: estado.equals("Finalizada") ? "No hay consultas finalizadas" : " No hay consultas";
 			listaConsultas.add(mensaje);
 		} else {
 			for (HashMap<String, String> c : consultasData) {
-				String icono = c.get("estado").equals("Activa") ? "🟢" : "🔴";
+				String icono = c.get("estado").equals("Activa") ? "[*Activa*]" : "[*Finalizada*]";
 				listaConsultas.add(icono + " " + c.get("paciente") + " - " + c.get("medico") + " ("
 						+ c.get("fecha_consulta") + " " + c.get("hora_consulta") + ")");
 			}

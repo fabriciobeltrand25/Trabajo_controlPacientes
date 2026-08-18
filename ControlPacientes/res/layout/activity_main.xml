@@ -94,18 +94,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="👋 ¡Bienvenido!"
+                android:text="¡Bienvenido!"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#064B7A" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Selecciona una opción del menú para comenzar"
-                android:textSize="13sp"
-                android:textColor="#666666"
-                android:layout_marginTop="4dp" />
 
         </LinearLayout>
 
@@ -125,7 +117,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📋 Módulos del sistema"
+                android:text="Módulos del sistema"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="#064B7A"
@@ -138,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:background="#16845A"
+                android:background="#075985"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="14dp"
@@ -169,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:background="#1976D2"
+                android:background="#546E7A"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="14dp"
@@ -200,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:background="#E67E22"
+                android:background="#2E86C1"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="14dp"
@@ -231,7 +223,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:background="#064B7A"
+                android:background="#37474F"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="14dp"
@@ -262,7 +254,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:background="#9C27B0"
+                android:background="#4A7C9E"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="14dp"
