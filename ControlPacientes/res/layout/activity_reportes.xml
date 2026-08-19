@@ -251,8 +251,7 @@
             <ListView
                 android:id="@+id/lvReportes"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_weight="0.69"
+                android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:divider="#D8E3EA"
                 android:dividerHeight="1dp"

@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "control_medicos.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 
 	private static final String TABLE_MEDICOS = "medicos";
 	private static final String TABLE_PACIENTES = "pacientes";
@@ -113,24 +113,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ "('0801-1995-78901','Carmen Torres','Colonia Kennedy, Casa #67','9999-9999','1995-05-10'),"
 				+ "('0801-1982-34567','José Ramírez','Residencial Las Lomas, #90','8888-1111','1982-09-25')");
 
-		
 		String hoy = fechaRelativa(0);
-		String ayer = fechaRelativa(1);
 		String haceDosDias = fechaRelativa(2);
 		String haceTresDias = fechaRelativa(3);
 		
+		// Inserción de consultas: Las consultas 2 y 3 quedan 'Finalizadas' y sin cobro registrado
 		db.execSQL("INSERT INTO " + TABLE_CONSULTAS + "(" + KEY_ID_PACIENTE + "," + KEY_ID_MEDICO + ","
-	            + KEY_FECHA_CONSULTA + "," + KEY_HORA_CONSULTA + "," + KEY_VALOR_CONSULTA + "," + KEY_ESTADO + ") VALUES " +
-	            "(1,1,'" + hoy + "','09:00',500.00,'Activa')," +
-	            "(2,2,'" + haceDosDias + "','10:30',500.00,'Finalizada')," +
-	            "(3,3,'" + haceTresDias + "','14:00',500.00,'Finalizada')," +
-	            "(4,4,'" + hoy + "','11:00',500.00,'Activa')");
+				+ KEY_FECHA_CONSULTA + "," + KEY_HORA_CONSULTA + "," + KEY_VALOR_CONSULTA + "," + KEY_ESTADO + ") VALUES " +
+				"(1,1,'" + hoy + "','09:00',500.00,'Activa')," +
+				"(2,2,'" + haceDosDias + "','10:30',500.00,'Finalizada')," +
+				"(3,3,'" + haceTresDias + "','14:00',500.00,'Finalizada')," +
+				"(4,4,'" + hoy + "','11:00',500.00,'Activa')");
 
-	    // Insertar Cobros (registrados el día de hoy)
-	    db.execSQL("INSERT INTO " + TABLE_COBROS + "(" + KEY_ID_CONSULTA + "," + KEY_VALOR_BASE + ","
-	            + KEY_MORA + "," + KEY_TOTAL_PAGADO + "," + KEY_CAMBIO + "," + KEY_FECHA_PAGO + ") VALUES " +
-	            "(2,500.00,20.00,520.00,0.00,'" + haceDosDias + "')," +
-	            "(3,500.00,40.00,600.00,60.00,'" + haceTresDias + "')");
+		// NOTA: Se remueve el INSERT en TABLE_COBROS para que no marque las consultas como pagadas al inicio.
 	}
 
 

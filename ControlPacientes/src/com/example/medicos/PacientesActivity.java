@@ -252,6 +252,7 @@ public class PacientesActivity extends Activity {
         listarPacientes();
     }
     
+    
     private void guardarPaciente() {
         String identidad = etIdentidad.getText().toString().trim();
         String nombre = etNombre.getText().toString().trim();
@@ -261,6 +262,12 @@ public class PacientesActivity extends Activity {
         
         if (identidad.isEmpty() || nombre.isEmpty()) {
             Toast.makeText(this, "⚠️ Identidad y Nombre son obligatorios", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar formato del nombre
+        if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            Toast.makeText(this, "⚠️ El nombre solo debe contener letras y espacios", Toast.LENGTH_LONG).show();
             return;
         }
         
@@ -285,6 +292,8 @@ public class PacientesActivity extends Activity {
             Toast.makeText(this, "❌ Error: La identidad ya existe", Toast.LENGTH_SHORT).show();
         }
     }
+    
+    
     
     private void listarPacientes() {
         listaPacientes.clear();
@@ -371,6 +380,17 @@ public class PacientesActivity extends Activity {
         String direccion = etDireccion.getText().toString().trim();
         String telefono = etTelefono.getText().toString().trim();
         String fechaNac = etFechaNac.getText().toString().trim();
+
+        if (identidad.isEmpty() || nombre.isEmpty()) {
+            Toast.makeText(this, "⚠️ Identidad y Nombre son obligatorios", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar formato del nombre
+        if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            Toast.makeText(this, "⚠️ El nombre solo debe contener letras y espacios", Toast.LENGTH_LONG).show();
+            return;
+        }
         
         // Validar formato de identidad (13 dígitos con guiones)
         String identidadLimpia = identidad.replaceAll("-", "");

@@ -168,31 +168,38 @@ public class MedicosActivity extends Activity {
         String telefono = etTelefono.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         
-        
         if (codigo.isEmpty() || nombre.isEmpty()) {
             Toast.makeText(this, "⚠️ Código y Nombre son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // Validar formato del nombre
+        if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            Toast.makeText(this, "⚠️ El nombre solo debe contener letras y espacios", Toast.LENGTH_LONG).show();
+            return;
+        }
         
-      
+     // Validar especialidad (si el usuario escribió algo)
+        if (!especialidad.isEmpty() && !especialidad.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            Toast.makeText(this, "⚠️ La especialidad solo debe contener letras y espacios", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
         if (!codigo.matches("^[a-zA-Z0-9]+$")) {
             Toast.makeText(this, "⚠️ El código solo puede contener letras y números (sin espacios)", Toast.LENGTH_LONG).show();
             return;
         }
         
-       
         if (!telefono.isEmpty() && !telefono.matches("\\d{4}-\\d{4}")) {
             Toast.makeText(this, "⚠️ Teléfono debe tener formato 1234-5678", Toast.LENGTH_LONG).show();
             return;
         }
         
-      
         if (!email.isEmpty() && !isValidEmail(email)) {
             Toast.makeText(this, "⚠️ Email inválido (ej: usuario@gmail.com)", Toast.LENGTH_LONG).show();
             return;
         }
         
-        // Verificar si el código ya existe (evitar duplicados)
         if (dbHelper.verificarCodigoMedico(codigo)) {
             Toast.makeText(this, "❌ Error: El código ya existe", Toast.LENGTH_SHORT).show();
             return;
@@ -293,33 +300,40 @@ public class MedicosActivity extends Activity {
         String telefono = etTelefono.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         
-        // Validar campos obligatorios
         if (codigo.isEmpty() || nombre.isEmpty()) {
             Toast.makeText(this, "⚠️ Código y Nombre son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // Validar formato del nombre
+        if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            Toast.makeText(this, "⚠️ El nombre solo debe contener letras y espacios", Toast.LENGTH_LONG).show();
+            return;
+        }
         
-        // Validar código (solo números y letras, sin espacios)
         if (!codigo.matches("^[a-zA-Z0-9]+$")) {
             Toast.makeText(this, "⚠️ El código solo puede contener letras y números (sin espacios)", Toast.LENGTH_LONG).show();
             return;
         }
         
-        // Validar formato de teléfono
         if (!telefono.isEmpty() && !telefono.matches("\\d{4}-\\d{4}")) {
             Toast.makeText(this, "⚠️ Teléfono debe tener formato 1234-5678", Toast.LENGTH_LONG).show();
             return;
         }
         
-        // Validar email
         if (!email.isEmpty() && !isValidEmail(email)) {
             Toast.makeText(this, "⚠️ Email inválido (ej: usuario@gmail.com)", Toast.LENGTH_LONG).show();
             return;
         }
         
-        // Verificar si el código ya existe (excluyendo el registro actual)
         if (dbHelper.verificarCodigoMedico(codigo, idEditando)) {
             Toast.makeText(this, "❌ Error: El código ya existe", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+     // Validar especialidad (si el usuario escribió algo)
+        if (!especialidad.isEmpty() && !especialidad.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            Toast.makeText(this, "⚠️ La especialidad solo debe contener letras y espacios", Toast.LENGTH_LONG).show();
             return;
         }
         
@@ -330,6 +344,7 @@ public class MedicosActivity extends Activity {
         } else {
             Toast.makeText(this, "❌ Error al actualizar", Toast.LENGTH_SHORT).show();
         }
+        
     }
     
     private void eliminarMedico(final HashMap<String, String> medico) {

@@ -2,68 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#EAF4FB"
-    android:padding="12dp">
+    android:orientation="vertical"
+    android:padding="12dp" >
 
     <!-- ENCABEZADO AZUL -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:background="#075985"
-        android:padding="12dp"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp" >
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/pacientes"
-            android:contentDescription="Logo Pacientes" />
+            android:contentDescription="Logo Pacientes"
+            android:src="@drawable/pacientes" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp">
+            android:orientation="vertical" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CONTROL DE PACIENTES"
+                android:textColor="#FFFFFF"
                 android:textSize="17sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Administración de información médica"
-                android:textSize="11sp"
-                android:textColor="#D8F0FF" />
-
+                android:textColor="#D8F0FF"
+                android:textSize="11sp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/btnLimpiar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Limpiar"
-            android:textSize="11sp"
-            android:textColor="#075985"
             android:background="#FFFFFF"
-            android:padding="8dp" />
-
+            android:padding="8dp"
+            android:text="Limpiar"
+            android:textColor="#075985"
+            android:textSize="11sp" />
     </LinearLayout>
 
     <!-- ÁREA CON SCROLL (Para que el teclado no tape nada) -->
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:fillViewport="true" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,8 +108,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/rounded_edittext"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZáéíóúÁÉÍÓÚñÑ "
                     android:hint="Nombre completo"
-                    android:inputType="textPersonName"
+                    android:inputType="textPersonName|textCapWords"
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="#17324D"
@@ -234,14 +235,12 @@
             <ListView
                 android:id="@+id/lvPacientes"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_weight="0.71"
+                android:layout_height="200dp"
                 android:background="#FFFFFF"
                 android:divider="#D8E3EA"
                 android:dividerHeight="1dp"
                 android:padding="5dp" />
         </LinearLayout>
-
     </ScrollView>
 
 </LinearLayout>

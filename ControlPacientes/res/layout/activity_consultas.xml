@@ -189,8 +189,7 @@
             <ListView
                 android:id="@+id/lvConsultas"
                 android:layout_width="match_parent"
-                android:layout_height="296dp"
-                android:layout_weight="0.47"
+                android:layout_height="199dp"
                 android:background="#FFFFFF"
                 android:divider="#D8E3EA"
                 android:dividerHeight="1dp"
