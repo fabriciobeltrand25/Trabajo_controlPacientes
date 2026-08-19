@@ -68,179 +68,180 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <!-- TARJETA FORMULARIO -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:padding="14dp"
                 android:layout_marginTop="8dp"
-                android:elevation="3dp">
+                android:background="#FFFFFF"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                android:padding="14dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Datos del médico"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:textColor="#064B7A"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etCodigo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
                     android:hint="Código del médico"
                     android:inputType="text"
-                    android:singleLine="true"
                     android:padding="10dp"
+                    android:singleLine="true"
                     android:textColor="#17324D"
-                    android:textColorHint="#8A9AA8"
-                    android:background="@drawable/rounded_edittext" />
+                    android:textColorHint="#8A9AA8" />
 
                 <EditText
                     android:id="@+id/etNombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/rounded_edittext"
                     android:hint="Nombre completo"
                     android:inputType="textPersonName"
-                    android:singleLine="true"
                     android:padding="10dp"
-                    android:layout_marginTop="6dp"
+                    android:singleLine="true"
                     android:textColor="#17324D"
-                    android:textColorHint="#8A9AA8"
-                    android:background="@drawable/rounded_edittext" />
+                    android:textColorHint="#8A9AA8" />
 
                 <EditText
                     android:id="@+id/etEspecialidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/rounded_edittext"
                     android:hint="Especialidad"
                     android:inputType="textCapSentences"
-                    android:singleLine="true"
                     android:padding="10dp"
-                    android:layout_marginTop="6dp"
+                    android:singleLine="true"
                     android:textColor="#17324D"
-                    android:textColorHint="#8A9AA8"
-                    android:background="@drawable/rounded_edittext" />
+                    android:textColorHint="#8A9AA8" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="6dp">
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal" >
 
                     <EditText
                         android:id="@+id/etTelefono"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/rounded_edittext"
                         android:hint="Teléfono"
                         android:inputType="phone"
-                        android:singleLine="true"
                         android:padding="10dp"
+                        android:singleLine="true"
                         android:textColor="#17324D"
-                        android:textColorHint="#8A9AA8"
-                        android:background="@drawable/rounded_edittext" />
+                        android:textColorHint="#8A9AA8" />
 
                     <EditText
                         android:id="@+id/etEmail"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edittext"
                         android:hint="Correo electrónico"
                         android:inputType="textEmailAddress"
-                        android:singleLine="true"
                         android:padding="10dp"
+                        android:singleLine="true"
                         android:textColor="#17324D"
-                        android:textColorHint="#8A9AA8"
-                        android:background="@drawable/rounded_edittext" />
-
+                        android:textColorHint="#8A9AA8" />
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/btnGuardar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GUARDAR MÉDICO"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"
                     android:background="#16845A"
                     android:padding="10dp"
-                    android:layout_marginTop="10dp" />
-
+                    android:text="GUARDAR MÉDICO"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- BÚSQUEDA -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="10dp">
+                android:orientation="horizontal" >
 
                 <EditText
                     android:id="@+id/etBuscar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/rounded_edittext"
                     android:hint="Buscar médico..."
                     android:inputType="text"
-                    android:singleLine="true"
                     android:padding="10dp"
+                    android:singleLine="true"
                     android:textColor="#17324D"
-                    android:textColorHint="#8A9AA8"
-                    android:background="@drawable/rounded_edittext" />
+                    android:textColorHint="#8A9AA8" />
 
                 <Button
                     android:id="@+id/btnBuscar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Buscar"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
+                    android:layout_marginLeft="6dp"
                     android:background="#1976D2"
                     android:padding="8dp"
-                    android:layout_marginLeft="6dp" />
+                    android:text="Buscar"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnListar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Todos"
-                    android:textColor="#FFFFFF"
+                    android:layout_marginLeft="4dp"
                     android:background="#064B7A"
                     android:padding="8dp"
-                    android:layout_marginLeft="4dp" />
-
+                    android:text="Todos"
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Médicos registrados"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="#064B7A"
+                android:layout_marginBottom="4dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="4dp" />
+                android:text="Médicos registrados"
+                android:textColor="#064B7A"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <!-- LISTA (Altura fija para no causar conflictos de scroll) -->
+
             <ListView
                 android:id="@+id/lvMedicos"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
+                android:layout_weight="0.63"
                 android:background="#FFFFFF"
-                android:padding="5dp"
                 android:divider="#D8E3EA"
-                android:dividerHeight="1dp" />
-
+                android:dividerHeight="1dp"
+                android:padding="5dp" />
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

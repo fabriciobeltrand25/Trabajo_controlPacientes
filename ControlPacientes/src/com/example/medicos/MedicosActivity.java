@@ -53,7 +53,7 @@ public class MedicosActivity extends Activity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaMedicos);
         lvMedicos.setAdapter(adapter);
         
-        // ============ MÁSCARA PARA TELÉFONO HONDURAS ============
+        // --- MÁSCARA PARA TELÉFONO HONDURAS
         etTelefono.addTextChangedListener(new TextWatcher() {
             private boolean isUpdating = false;
             
@@ -68,19 +68,19 @@ public class MedicosActivity extends Activity {
                 if (isUpdating) return;
                 isUpdating = true;
                 
-                // Eliminar todo excepto números
+           
                 String input = s.toString().replaceAll("[^0-9]", "");
                 
-                // Formato: 1234-5678 (8 dígitos)
+                
                 if (input.length() > 4) {
                     String parte1 = input.substring(0, 4);
                     String parte2 = input.substring(4, Math.min(input.length(), 8));
                     input = parte1 + "-" + parte2;
                 }
                 
-                // Si excede 8 dígitos, truncar
+             
                 if (input.replaceAll("[^0-9]", "").length() > 8) {
-                    input = input.substring(0, 9); // 4 dígitos + guión + 4 dígitos = 9
+                    input = input.substring(0, 9); 
                 }
                 
                 if (!input.equals(s.toString())) {
@@ -92,7 +92,7 @@ public class MedicosActivity extends Activity {
             }
         });
         
-        // ============ VALIDACIÓN DE EMAIL EN TIEMPO REAL ============
+        //---- VALIDACIÓN DE EMAIL EN TIEMPO REAL 
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -151,12 +151,12 @@ public class MedicosActivity extends Activity {
         listarMedicos();
     }
     
-    // ============ MÉTODO PARA VALIDAR EMAIL ============
+    // --- MÉTODO PARA VALIDAR EMAIL
     private boolean isValidEmail(String email) {
         if (email == null || email.isEmpty()) {
             return false;
         }
-        // Patrón para email: cualquier nombre + @ + cualquier dominio (gmail.com, hotmail.com, etc)
+      
         String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return Pattern.matches(emailPattern, email);
     }
@@ -168,25 +168,25 @@ public class MedicosActivity extends Activity {
         String telefono = etTelefono.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         
-        // Validar campos obligatorios
+        
         if (codigo.isEmpty() || nombre.isEmpty()) {
             Toast.makeText(this, "⚠️ Código y Nombre son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
         
-        // Validar código (solo números y letras, sin espacios)
+      
         if (!codigo.matches("^[a-zA-Z0-9]+$")) {
             Toast.makeText(this, "⚠️ El código solo puede contener letras y números (sin espacios)", Toast.LENGTH_LONG).show();
             return;
         }
         
-        // Validar formato de teléfono (debe tener guión)
+       
         if (!telefono.isEmpty() && !telefono.matches("\\d{4}-\\d{4}")) {
             Toast.makeText(this, "⚠️ Teléfono debe tener formato 1234-5678", Toast.LENGTH_LONG).show();
             return;
         }
         
-        // Validar email
+      
         if (!email.isEmpty() && !isValidEmail(email)) {
             Toast.makeText(this, "⚠️ Email inválido (ej: usuario@gmail.com)", Toast.LENGTH_LONG).show();
             return;

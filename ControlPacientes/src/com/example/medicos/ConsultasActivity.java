@@ -57,7 +57,7 @@ public class ConsultasActivity extends Activity {
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
 		etFecha.setText(sdf.format(new java.util.Date()));
 
-		// ============ MÁSCARA PARA FECHA (YYYY-MM-DD) ============
+		// ------- MÁSCARA PARA FECHA (YYYY-MM-DD) 
 		etFecha.addTextChangedListener(new TextWatcher() {
 			private boolean isUpdating = false;
 
@@ -75,10 +75,10 @@ public class ConsultasActivity extends Activity {
 					return;
 				isUpdating = true;
 
-				// Eliminar todo excepto números
+				
 				String input = s.toString().replaceAll("[^0-9]", "");
 
-				// Formato: YYYY-MM-DD (8 dígitos)
+				
 				if (input.length() > 4) {
 					String anio = input.substring(0, 4);
 					String resto = input.substring(4);
@@ -91,7 +91,7 @@ public class ConsultasActivity extends Activity {
 					}
 				}
 
-				// Limitar a 8 dígitos (YYYYMMDD)
+				
 				String soloNumeros = input.replaceAll("[^0-9]", "");
 				if (soloNumeros.length() > 8) {
 					soloNumeros = soloNumeros.substring(0, 8);
@@ -119,7 +119,7 @@ public class ConsultasActivity extends Activity {
 			}
 		});
 
-		// ============ MÁSCARA PARA HORA ============
+		
 		etHora.addTextChangedListener(new TextWatcher() {
 			private boolean isUpdating = false;
 
@@ -143,7 +143,7 @@ public class ConsultasActivity extends Activity {
 					String horas = input.substring(0, Math.min(2, input.length() - 2));
 					String minutos = input.substring(Math.max(0, input.length() - 2));
 
-					// Validar que horas sea 00-23 y minutos 00-59
+					
 					try {
 						int h = Integer.parseInt(horas);
 						int m = Integer.parseInt(minutos);
@@ -220,7 +220,7 @@ public class ConsultasActivity extends Activity {
 			}
 		});
 
-		// Cargar consultas activas por defecto
+		
 		estadoActual = "Activa";
 		listarConsultas("Activa");
 	}
@@ -256,14 +256,14 @@ public class ConsultasActivity extends Activity {
 	        sdf.setLenient(false);
 	        java.util.Date fechaConsulta = sdf.parse(fecha);
 
-	        // Obtener el inicio del día de HOY (00:00:00.000)
+	        
 	        java.util.Calendar calHoy = java.util.Calendar.getInstance();
 	        calHoy.set(java.util.Calendar.HOUR_OF_DAY, 0);
 	        calHoy.set(java.util.Calendar.MINUTE, 0);
 	        calHoy.set(java.util.Calendar.SECOND, 0);
 	        calHoy.set(java.util.Calendar.MILLISECOND, 0);
 
-	        // Obtener la fecha a evaluar a la medianoche (00:00:00.000)
+	        
 	        java.util.Calendar calConsulta = java.util.Calendar.getInstance();
 	        calConsulta.setTime(fechaConsulta);
 	        calConsulta.set(java.util.Calendar.HOUR_OF_DAY, 0);
@@ -279,7 +279,7 @@ public class ConsultasActivity extends Activity {
 	    }
 	}
 
-	// ============ VALIDAR FORMATO DE FECHA ============
+	//-VALIDAR FORMATO DE FECHA 
 	private boolean validarFecha(String fecha) {
 		if (!fecha.matches("\\d{4}-\\d{2}-\\d{2}")) {
 			return false;
@@ -291,7 +291,7 @@ public class ConsultasActivity extends Activity {
 		return anio >= 1900 && anio <= 2100 && mes >= 1 && mes <= 12 && dia >= 1 && dia <= 31;
 	}
 
-	// ============ VALIDAR FORMATO DE HORA ============
+	// - VALIDAR FORMATO DE HORA 
 	private boolean validarHora(String hora) {
 		if (!PATTERN_HORA.matcher(hora).matches()) {
 			return false;
@@ -302,7 +302,7 @@ public class ConsultasActivity extends Activity {
 		return horas >= 0 && horas <= 23 && minutos >= 0 && minutos <= 59;
 	}
 
-	// ============ FORMATEAR HORA ============
+
 	private String formatearHora(String hora) {
 		hora = hora.trim();
 
@@ -353,20 +353,20 @@ public class ConsultasActivity extends Activity {
 			return;
 		}
 
-		// ============ VALIDACIÓN DE FORMATO DE FECHA ============
+		
 		if (!validarFecha(fecha)) {
 			Toast.makeText(this, "⚠️ Fecha inválida. Use formato YYYY-MM-DD (ej: 2024-12-07)", Toast.LENGTH_LONG)
 					.show();
 			return;
 		}
 		
-		// ============ VALIDAR QUE LA FECHA NO SEA ANTERIOR A HOY ============
+		
 		if (!validarFechaNoPasada(fecha)) {
 		    Toast.makeText(this, "⚠️ No puede asignar una consulta con fecha anterior a hoy", Toast.LENGTH_LONG).show();
 		    return;
 		}
 
-		// ============ VALIDACIÓN DE FORMATO DE HORA ============
+		
 		String horaFormateada = formatearHora(hora);
 
 		if (horaFormateada == null) {
@@ -379,9 +379,8 @@ public class ConsultasActivity extends Activity {
 			return;
 		}
 
-		// Actualizar el campo con el formato correcto
+		
 		etHora.setText(horaFormateada);
-
 		// ============ OBTENER IDs ============
 		ArrayList<HashMap<String, String>> pacientes = dbHelper.listarPacientes();
 		int idPaciente = Integer.parseInt(pacientes.get(posPaciente - 1).get("id"));
@@ -389,15 +388,13 @@ public class ConsultasActivity extends Activity {
 		ArrayList<HashMap<String, String>> medicos = dbHelper.listarMedicos();
 		int idMedico = Integer.parseInt(medicos.get(posMedico - 1).get("id"));
 
-		// ============ VALIDACIONES ============
-
-		// 1. Verificar si el paciente tiene consulta activa
+		
 		if (dbHelper.tieneConsultaActiva(idPaciente)) {
 			Toast.makeText(this, "⚠️ El paciente ya tiene una consulta activa", Toast.LENGTH_LONG).show();
 			return;
 		}
 
-		// 2. Verificar si tiene una consulta finalizada que aún no ha cancelado
+		
 		if (dbHelper.tienePagoPendiente(idPaciente)) {
 			Toast.makeText(this,
 					"⚠️ El paciente tiene una consulta pendiente de pago. Debe cancelarla en Cobros antes de asignarle otra.",
@@ -405,7 +402,7 @@ public class ConsultasActivity extends Activity {
 			return;
 		}
 
-		// 3. VERIFICAR DISPONIBILIDAD DEL MÉDICO
+		
 		if (!dbHelper.medicoDisponible(idMedico, fecha, horaFormateada)) {
 			String nombreMedico = medicos.get(posMedico - 1).get("nombre");
 			Toast.makeText(this, "⚠️ El Dr(a). " + nombreMedico + " ya tiene una consulta asignada en esa fecha y hora",
@@ -413,7 +410,7 @@ public class ConsultasActivity extends Activity {
 			return;
 		}
 
-		// ============ INSERTAR CONSULTA ============
+		// --INSERTAR CONSULTA
 		if (dbHelper.insertarConsulta(idPaciente, idMedico, fecha, horaFormateada)) {
 			Toast.makeText(this, "✅ Consulta asignada exitosamente", Toast.LENGTH_SHORT).show();
 			listarConsultas(estadoActual.equals("todas") ? "todas" : estadoActual);

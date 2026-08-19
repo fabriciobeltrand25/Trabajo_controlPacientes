@@ -58,31 +58,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <!-- TARJETA FORMULARIO -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:padding="14dp"
                 android:layout_marginTop="8dp"
-                android:elevation="3dp">
+                android:background="#FFFFFF"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                android:padding="14dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:text="Registro de pago"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
                     android:textColor="#064B7A"
-                    android:layout_marginBottom="10dp" />
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal" >
 
                     <Spinner
                         android:id="@+id/spPacientes"
@@ -96,74 +97,73 @@
                         android:id="@+id/btnBuscar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Buscar"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
+                        android:layout_marginLeft="6dp"
                         android:background="#1976D2"
+                        android:paddingBottom="10dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:layout_marginLeft="6dp" />
-
+                        android:text="Buscar"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal" >
 
                     <Button
                         android:id="@+id/btnPagar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="PAGAR CONSULTA"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF"
                         android:background="#16845A"
-                        android:padding="11dp" />
+                        android:padding="11dp"
+                        android:text="PAGAR CONSULTA"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/btnLimpiar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="5dp"
-                        android:text="LIMPIAR"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF"
+                        android:layout_weight="1"
                         android:background="#064B7A"
-                        android:padding="11dp" />
-
+                        android:padding="11dp"
+                        android:text="LIMPIAR"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
-
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Historial de cobros"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#064B7A"
+                android:layout_marginBottom="6dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="6dp" />
+                android:text="Historial de cobros"
+                android:textColor="#064B7A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <!-- LISTA (Altura fija para no conflictuar con el ScrollView) -->
+
             <ListView
                 android:id="@+id/lvCobros"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
+                android:layout_weight="0.47"
                 android:background="#FFFFFF"
-                android:padding="5dp"
                 android:divider="#D8E3EA"
-                android:dividerHeight="1dp" />
-
+                android:dividerHeight="1dp"
+                android:padding="5dp" />
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

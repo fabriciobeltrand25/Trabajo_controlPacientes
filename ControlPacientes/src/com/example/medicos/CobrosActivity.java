@@ -48,7 +48,7 @@ public class CobrosActivity extends Activity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaCobros);
         lvCobros.setAdapter(adapter);
         
-        // Cargar pacientes con deuda en el Spinner
+       
         cargarPacientesConDeuda();
         
         btnBuscar.setOnClickListener(new View.OnClickListener() {
@@ -105,47 +105,47 @@ public class CobrosActivity extends Activity {
     }
 
     private void cargarPacientesConDeuda() {
-        // Obtener solo pacientes que tienen consultas finalizadas sin pagar
+       
         pacientesData = dbHelper.obtenerPacientesConDeuda();
         
-        // Lista para mostrar en el Spinner (con formato "Identidad - Nombre" para el desplegable)
+     
         final ArrayList<String> nombresPacientes = new ArrayList<String>();
         nombresPacientes.add("Seleccione un paciente...");
         
-        // Lista para almacenar las identidades reales
+       
         final ArrayList<String> identidadesPacientes = new ArrayList<String>();
-        identidadesPacientes.add(""); // Para la posición 0
+        identidadesPacientes.add(""); 
         
         if (pacientesData != null) {
             for (HashMap<String, String> p : pacientesData) {
                 String identidad = p.get("identidad");
                 String nombre = p.get("nombre");
-                // Para mostrar en el desplegable: "Identidad - Nombre"
+               
                 nombresPacientes.add(identidad + " - " + nombre);
-                // Para almacenar la identidad real
+              
                 identidadesPacientes.add(identidad);
             }
         }
         
-        // Adaptador personalizado para el Spinner
+        
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nombresPacientes) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView text = (TextView) view.findViewById(android.R.id.text1);
                 
-                // En la vista seleccionada (cuando está cerrado), mostrar solo la identidad
+                
                 if (position > 0 && position < identidadesPacientes.size()) {
-                    // Obtener solo la identidad del string "Identidad - Nombre"
+                   
                     String fullText = nombresPacientes.get(position);
                     String[] parts = fullText.split(" - ");
                     if (parts.length > 0) {
-                        text.setText(parts[0]); // Mostrar solo la identidad
+                        text.setText(parts[0]); 
                     } else {
                         text.setText(fullText);
                     }
                 } else {
-                    // Para la primera opción "Seleccione un paciente..."
+                   
                     text.setText(nombresPacientes.get(position));
                 }
                 return view;
@@ -155,8 +155,7 @@ public class CobrosActivity extends Activity {
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPacientes.setAdapter(adapterSpinner);
         
-        // Guardar las identidades para usarlas al buscar
-        // (Ya tenemos pacientesData para eso)
+       
     }
     
     private void buscarCobros() {
@@ -166,7 +165,6 @@ public class CobrosActivity extends Activity {
             return;
         }
 
-        // Obtiene la identidad directamente del objeto cargado en la posición exacta
         String identidad = pacientesData.get(posicion - 1).get("identidad");
         
         listaCobros.clear();
@@ -202,7 +200,7 @@ public class CobrosActivity extends Activity {
         final EditText input = new EditText(this);
         input.setHint("Ingrese monto a pagar");
         
-        // ============ VALIDACIÓN: SOLO NÚMEROS Y UN PUNTO DECIMAL ============
+       
         input.addTextChangedListener(new android.text.TextWatcher() {
             private boolean isUpdating = false;
             
@@ -218,10 +216,10 @@ public class CobrosActivity extends Activity {
                 isUpdating = true;
                 
                 String inputText = s.toString();
-                // Permitir solo números y un punto decimal
+                
                 String filtered = inputText.replaceAll("[^\\d.]", "");
                 
-                // Asegurar que solo haya un punto decimal
+              
                 int dotCount = 0;
                 StringBuilder sb = new StringBuilder();
                 for (char c : filtered.toCharArray()) {
@@ -235,7 +233,7 @@ public class CobrosActivity extends Activity {
                     }
                 }
                 
-                // Si el primer carácter es punto, agregar un 0 antes
+                
                 String result = sb.toString();
                 if (result.startsWith(".")) {
                     result = "0" + result;
@@ -249,7 +247,7 @@ public class CobrosActivity extends Activity {
             }
         });
         
-        // Agregar también un filtro para el teclado (solo números decimales)
+        
         input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | 
                            android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL);
         
@@ -278,14 +276,13 @@ public class CobrosActivity extends Activity {
                         }
                         Toast.makeText(CobrosActivity.this, mensaje, Toast.LENGTH_LONG).show();
                         
-                        // ============ LIMPIAR HISTORIAL AUTOMÁTICAMENTE ============
-                        // Recargar pacientes y cobros después del pago
+               
+                       
                         cargarPacientesConDeuda();
                         // Limpiar la lista y el historial
                         listaCobros.clear();
                         cobrosData.clear();
-                        adapter.notifyDataSetChanged();
-                        // Resetear el spinner a la posición inicial
+                        adapter.notifyDataSetChanged();        
                         if (spPacientes.getAdapter() != null && spPacientes.getAdapter().getCount() > 0) {
                             spPacientes.setSelection(0);
                         }
