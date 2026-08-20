@@ -271,6 +271,12 @@ public class PacientesActivity extends Activity {
             return;
         }
         
+     // Validar dirección (si se ingresó alguna)
+        if (!direccion.isEmpty() && !direccion.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ0123456789\\s,.\\-#]+$")) {
+            Toast.makeText(this, "⚠️ La dirección contiene caracteres no válidos", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
         // Validar formato de identidad (13 dígitos con guiones)
         String identidadLimpia = identidad.replaceAll("-", "");
         if (identidadLimpia.length() != 13) {
@@ -389,6 +395,12 @@ public class PacientesActivity extends Activity {
         // Validar formato del nombre
         if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
             Toast.makeText(this, "⚠️ El nombre solo debe contener letras y espacios", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+     // Validar dirección (si se ingresó alguna)
+        if (!direccion.isEmpty() && !direccion.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ0123456789\\s,.\\-#]+$")) {
+            Toast.makeText(this, "⚠️ La dirección contiene caracteres no válidos", Toast.LENGTH_LONG).show();
             return;
         }
         
